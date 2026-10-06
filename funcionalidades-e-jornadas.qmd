@@ -1,0 +1,5 @@
+---
+title: "Funcionalidades e jornadas"
+---
+
+{{< include /_partials/funcionalidades-e-jornadas.qmd >}}

@@ -1,0 +1,34 @@
+Esta é a documentação oficial do **PodeCrer**, a Infraestrutura Pública Digital de credenciais verificáveis do Brasil — uma solução tecnológica para compartilhamento consentido de dados. O documento tem dois objetivos: **explicar a arquitetura** do ecossistema e **guiar a entrada de novos participantes** — emissores, carteiras e verificadores.
+
+## Para quem é
+
+| Perfil | O que busca | Por onde começar |
+|---|---|---|
+| **Gestores públicos** | Decidir se o órgão participa; entender conceitos, benefícios e governança | [Introdução](/introducao.qmd) → [Funcionalidades e jornadas](/funcionalidades-e-jornadas.qmd) → [Confiança e governança](/confianca-e-governanca.qmd) |
+| **Integradores técnicos** | Implementar um emissor, verificador ou carteira | [Papéis e arquitetura](/papeis-e-arquitetura.qmd) → [Fluxos em detalhe](/fluxos.qmd) → [Guias práticos](/cookbooks/index.qmd) → [Especificações](/especificacoes/index.qmd) |
+| **Avaliadores de segurança e privacidade** | Examinar riscos, conformidade com a LGPD e o modelo de confiança | [Privacidade e LGPD](/privacidade-lgpd.qmd) → [Modelo de ameaças](/modelo-de-ameacas.qmd) → [Confiança e governança](/confianca-e-governanca.qmd) |
+
+## Como o documento se organiza
+
+Seguimos a separação do framework [Diátaxis](https://diataxis.fr/) entre três tipos de conteúdo, que não se misturam:
+
+- **Entenda** (explicação) — conceitos, arquitetura, decisões técnicas e seus porquês. Não é normativo; serve para formar entendimento.
+- **Integre** (guias práticos) — passo a passo orientado a tarefa. Todo guia começa com pré-requisitos e termina com um checklist.
+- **Especificações** (referência normativa) — o Perfil Brasileiro: requisitos numerados com as palavras-chave **DEVE**, **NÃO DEVE**, **PODE** e **RECOMENDADO**, na semântica do [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119). Em caso de conflito entre uma explicação e um perfil, **o perfil prevalece**.
+
+## Status e versionamento
+
+O PodeCrer está em fase de prova de conceito. Seções marcadas *em definição* ou *a confirmar* dependem de decisões de governança ou arquitetura ainda não tomadas — o [Roadmap](/roadmap.qmd) consolida todas essas pendências em um único lugar. As especificações indicam seu estágio (rascunho ou normativo) no topo de cada página.
+
+## Site e PDF
+
+O conteúdo é mantido em fonte única e publicado de duas formas:
+
+- **Este site** — a versão de referência, atualizada continuamente.
+- **PDF consolidado** — um snapshot para leitura, impressão e citação, gerado da mesma fonte.
+
+Em caso de divergência, o site prevalece.
+
+## Contribuindo
+
+A documentação vive em [github.com/injibr/arf](https://github.com/injibr/arf). Correções e sugestões são bem-vindas via issues e pull requests.

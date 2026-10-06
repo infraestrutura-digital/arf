@@ -1,0 +1,12 @@
+::: {.callout-warning}
+## Em definição
+Este perfil aguarda a decisão do modelo de registro de confiança e do arcabouço de governança. O problema, os modelos em avaliação (LOTE, protocolo baseado em credenciais, ancoragem em infraestrutura existente) e o ferramental estão descritos em [Confiança e governança](/confianca-e-governanca.qmd). Esta página fixa apenas os requisitos que independem do modelo escolhido.
+:::
+
+Define como participantes provam que são **autorizados** a emitir ou verificar credenciais — a camada que transforma criptografia em confiança institucional.
+
+## Requisitos mínimos (independentes do modelo)
+
+- **CONF-01** — Verificadores **DEVEM** poder checar a autorização de um emissor de forma automatizada e auditável.
+- **CONF-02** — A revogação da autorização de um participante **DEVE** ter efeito em prazo definido.
+- **CONF-03** — O mecanismo **NÃO DEVE** permitir rastreamento de verificações individuais pela autoridade central.

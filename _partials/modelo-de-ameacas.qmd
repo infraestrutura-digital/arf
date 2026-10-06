@@ -1,0 +1,49 @@
+::: {.callout-warning}
+## Esboço em evolução
+Um modelo de ameaças completo (com árvores de ataque e análise por componente) será consolidado com a definição dos ambientes brasileiros. Esta página estabelece escopo, método, as categorias priorizadas e o mapeamento inicial de mitigações.
+:::
+
+## Escopo
+
+O modelo cobre o ecossistema do PodeCrer: carteira e seu backend (mimoto), serviços de emissão (Inji Certify + integração com o Acesso gov.br), serviços de verificação (Inji Verify), configuração (inji-config) e os canais entre eles (OpenID4VCI/VP, QR, BLE).
+
+### Premissas
+
+- O dispositivo da pessoa portadora pode estar comprometido — a arquitetura deve limitar o dano.
+- Emissores e a governança são semi-confiáveis: protege-se a pessoa inclusive contra rastreamento por essas partes.
+- A criptografia subjacente (Ed25519, TLS) é considerada segura.
+
+## Método
+
+Análise **STRIDE** por componente (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege), complementada por **árvores de ataque** para os objetivos de mais alto risco.
+
+## Categorias de ameaça priorizadas
+
+1. **Indisponibilidade do ecossistema** — queda de backend da carteira, serviços de emissão, listas de status.
+2. **Comprometimento de componente** — supply chain, configuração insegura, endpoints expostos, vazamento interno.
+3. **Roubo/uso indevido de credencial** — extração do dispositivo, phishing de apresentação, replay de QR embarcado.
+4. **Emissão fraudulenta** — burla da autenticação (conta gov.br comprometida ou nível de confiabilidade insuficiente) para obter credencial de terceiro.
+5. **Violação de privacidade** — rastreamento de uso via consultas de status, correlação entre verificadores, coleta excessiva de atributos.
+6. **Falsificação de confiança** — emissor não autorizado passando por legítimo (mitigado pelo registro de confiança — [Confiança e governança](/confianca-e-governanca.qmd)).
+
+## Ameaças e mitigações por papel
+
+Mapeamento inicial das principais ameaças por papel do ecossistema, com as mitigações existentes no stack e as pendentes no perfil brasileiro:
+
+| Papel | Ameaça | Mitigação | Estado |
+|---|---|---|---|
+| Portador / carteira | Extração de credenciais de dispositivo roubado | Autenticação local (PIN/biometria); chaves em hardware (Keystore / Secure Enclave) | Stack |
+| Portador / carteira | Phishing de apresentação (verificador malicioso induz compartilhamento) | Tela de consentimento com quem/o quê/para quê; credenciamento de verificadores | Stack + governança *(em definição)* |
+| Portador / carteira | Replay de QR embarcado (cópia da imagem) | Validade curta do QR; holder binding na apresentação online; conferência visual no presencial | Parcial — árvore de ataque a detalhar |
+| Emissor | Emissão para impostor (conta gov.br comprometida) | Nível de confiabilidade mínimo por tipo de credencial (prata/ouro) | Perfil *(mapeamento em definição)* |
+| Emissor | Comprometimento da chave de assinatura | Chave em HSM; rotação; revogação em massa via status list; comunicação à governança | Perfil ([Identificadores](/especificacoes/perfil-identificadores.qmd)) |
+| Verificador | Aceitar emissor não autorizado | Registro de confiança (LOTE) | Governança *(em definição)* |
+| Verificador | Aceitar credencial revogada em cenário offline | Sinalização obrigatória de status não checado ([Perfil de Verificação](/especificacoes/perfil-verificacao.qmd)) | Perfil |
+| Infraestrutura | Supply chain dos forks (dependências, imagens) | Builds reproduzíveis, verificação de dependências, revisão de PRs | A implementar |
+| Infraestrutura | DoS em mimoto / status lists | Redundância, cache de status lists, verificação offline como degradação graciosa | A implementar |
+
+## Próximos passos
+
+- Detalhar árvores de ataque por categoria priorizada.
+- Completar o mapeamento mitigações do stack Inji vs. mitigações a implementar no perfil brasileiro.
+- Revisão externa de segurança antes do go-live.

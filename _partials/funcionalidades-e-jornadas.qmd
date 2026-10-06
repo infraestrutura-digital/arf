@@ -1,0 +1,46 @@
+O que o PodeCrer permite fazer, contado do ponto de vista de quem usa — sem protocolos nem detalhes de implementação. Este capítulo prepara o terreno para [Papéis e arquitetura](/papeis-e-arquitetura.qmd), onde os mesmos atores aparecem com seus nomes técnicos, e para os [Fluxos em detalhe](/fluxos.qmd), onde cada jornada vira um diagrama de sequência.
+
+## Para o cidadão
+
+### Receber uma credencial
+
+Maria precisa provar que é maior de idade. No aplicativo de carteira, ela escolhe o emissor da credencial de maioridade, entra com sua conta **gov.br** — a mesma que já usa para outros serviços públicos — e, segundos depois, a credencial está no seu celular. Nenhum cadastro novo, nenhuma senha adicional: o nível de confiabilidade da conta gov.br (bronze, prata ou ouro) é o que garante ao emissor que Maria é Maria.
+
+### Guardar com controle exclusivo
+
+A credencial fica **no dispositivo de Maria**, protegida por PIN ou biometria — não em um servidor central. O emissor não sabe o que ela faz com a credencial depois de emitida; nem o Estado consegue montar um histórico de onde ela a apresentou. Se ela trocar de celular, poderá restaurar suas credenciais *(mecanismo de backup: a confirmar)*.
+
+### Apresentar online
+
+Um site precisa confirmar que Maria é maior de idade. Em vez de enviar foto do RG, ela escaneia um QR code com a carteira. O app mostra **quem** está pedindo, **o que** está pedindo (apenas o atributo "maior de 18", não a data de nascimento) e **para quê**. Maria consente, e só então a prova é enviada. Ela pode recusar — o dado é dela.
+
+### Apresentar presencialmente, até sem internet
+
+Na portaria de um evento, Maria mostra o QR code da credencial na tela do celular; o fiscal escaneia e valida na hora, **sem rede** — a assinatura criptográfica é conferida localmente. Onde nem o celular dela tem sinal, a credencial pode ser transmitida por **Bluetooth** diretamente ao dispositivo do verificador.
+
+### Credencial em papel
+
+Quem não tem smartphone não fica de fora: uma credencial pode ser impressa com QR code. Quem precisa verificá-la escaneia o código e confere os dados validados no **Verificador Universal**, o portal público de verificação.
+
+## Para órgãos e empresas
+
+### Emitir credenciais
+
+Um órgão que atesta fatos sobre pessoas — identidade, habilitação, diploma, matrícula, benefício — pode transformá-los em credenciais verificáveis. O órgão conecta sua base de dados ao serviço de emissão, define o formato da credencial e publica seu identificador. A partir daí, qualquer cidadão autenticado pelo gov.br baixa sua credencial na carteira, e o órgão **deixa de responder consultas caso a caso**: a credencial prova a si mesma. Ver o [guia do emissor](/cookbooks/onboarding-emissor.qmd).
+
+### Verificar credenciais
+
+Quem precisa confirmar um fato — um banco validando identidade, uma escola conferindo diploma, um fiscal checando habilitação — valida a credencial **criptograficamente, sem consultar o emissor**. Isso significa: sem integração bilateral com cada órgão emissor, sem dependência da disponibilidade dele, e funcionando offline quando necessário. Ver o [guia do verificador](/cookbooks/onboarding-verificador.qmd).
+
+### Pedir só o necessário
+
+O verificador especifica os atributos mínimos de que precisa — e é só isso que recebe. Provar maioridade não revela data de nascimento; provar vínculo empregatício não revela salário. A minimização é propriedade da arquitetura, não boa vontade de quem verifica — ver [Privacidade e LGPD](/privacidade-lgpd.qmd).
+
+## O que o PodeCrer não faz
+
+Delimitar o escopo evita expectativas erradas:
+
+- **Não é um banco de dados central de documentos** — as credenciais vivem nos dispositivos das pessoas.
+- **Não é um serviço de consulta** — não existe API para buscar dados de alguém a partir do CPF; a pessoa participa de toda apresentação (ver [Por que não uma simples API?](/introducao.qmd)).
+- **Não rastreia uso** — nem o emissor nem a governança sabem onde uma credencial foi apresentada (propriedade [duplo-cego](/introducao.qmd#o-modelo-duplo-cego)).
+- **Não substitui a autenticação gov.br** — apoia-se nela para a emissão; credencial verificável e login são coisas distintas.

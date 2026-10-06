@@ -1,0 +1,77 @@
+Antes dos detalhes técnicos, vale entender o que é uma credencial verificável e por que o PodeCrer foi desenhado do jeito que é — uma espécie de **"Pix de documentos"**: uma infraestrutura pública sobre a qual qualquer emissor e verificador pode construir.
+
+## O problema
+
+::: {layout-ncol=2}
+![Na internet, ninguém sabe quem você é — e você não tem como provar.](assets/images/problema-internet.png){fig-alt="Ilustração de um cachorro sentado a uma escrivaninha, digitando em um computador"}
+
+![No mundo físico, para provar um fato você entrega todos.](assets/images/problema-bar.jpg){fig-alt="Ilustração de um bar com fotocopiadora e aviso: para comprar bebida, deixe sua fotocópia do RG aqui; sem cópia, sem álcool"}
+:::
+
+O problema tem duas faces, uma em cada mundo.
+
+**Na internet, não dá para provar fatos sobre você.** A velha piada de que "na internet, ninguém sabe que você é um cachorro" descreve uma limitação real: não existe um meio confiável e padronizado de demonstrar idade, formação, vínculo empregatício ou qualquer outro atributo. O resultado é fraude para um lado e barreiras burocráticas para o outro.
+
+**No mundo físico, provar um fato custa todos os seus dados.** Para comprar uma bebida, você não prova apenas que é maior de idade: entrega o documento inteiro — nome completo, CPF, filiação, endereço — e, no exemplo do bar, uma fotocópia dele ainda fica para trás, fora do seu controle, numa gaveta qualquer.
+
+São dois sintomas da mesma ausência: **falta um meio de provar exatamente o fato necessário — nada a mais —, de forma verificável, dentro e fora da internet.** É isso que as credenciais verificáveis resolvem.
+
+## O que é uma credencial
+
+No mundo físico, uma credencial é um **documento emitido por uma instituição ou indivíduo confiável que contém informação a respeito de alguma entidade** — RG, CNH, diploma, carteirinha de plano de saúde. Cinco elementos a fazem funcionar:
+
+1. **Emissor** — alguém em quem o verificador confia atesta o fato.
+2. **Vinculação ao portador** — a foto liga o documento à pessoa que o apresenta.
+3. **Validade** — datas delimitam quando o documento vale.
+4. **Prova de autenticidade** — marca d'água, holograma e papel especial dificultam a falsificação.
+5. **Formato padronizado** — qualquer pessoa reconhece uma CNH ao vê-la.
+
+![Um documento físico reúne os cinco elementos: emissor, foto do portador, validade, elementos de autenticidade e formato padronizado.](assets/images/credencial-fisica.png){fig-alt="Exemplo ilustrativo de passaporte brasileiro de teste, com foto, campos de validade e zona de leitura por máquina"}
+
+## O que é uma credencial verificável
+
+Uma **credencial verificável** (VC) é o equivalente digital — com uma diferença essencial: é **verificável por máquinas**. Cada elemento físico tem seu análogo criptográfico: a assinatura digital do emissor substitui o holograma; uma chave criptográfica no dispositivo da pessoa substitui a foto (vinculação ao portador); os campos de validade são legíveis por software; e o formato padronizado é o [W3C Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model-2.0/).
+
+![Com credenciais verificáveis, a pessoa carrega e apresenta seus próprios dados.](assets/images/credencial-verificavel.jpg){fig-alt="Ilustração de uma pessoa segurando um celular, cercada por ícones de credenciais, cadeados e documentos conectados em rede"}
+
+O resultado: **na internet, agora dá para provar fatos sobre você sem abrir mão da sua privacidade.**
+
+## Princípios
+
+O PodeCrer segue quatro princípios de projeto:
+
+| Princípio | O que significa |
+|---|---|
+| **Soberania do cidadão** | A credencial fica no dispositivo da pessoa, que decide quando e para quem apresentá-la, mediante consentimento explícito. |
+| **Padrão aberto** | Formatos e protocolos abertos (W3C, OpenID); qualquer parte pode implementar, sem monopólio de fornecedor. |
+| **Privacidade por design** | Minimização de dados (provar `age_over_18` sem revelar a data de nascimento) e ausência de rastreamento. |
+| **Segurança** | Criptografia de ponta a ponta, chaves protegidas por hardware, assinaturas ancoradas na ICP-Brasil — segurança em camadas. |
+
+![Os quatro princípios do PodeCrer.](assets/images/principios.png){fig-alt="Quatro ícones em fila: mão segurando pessoa (soberania do usuário), peças de quebra-cabeça (padrão aberto), cadeado com folha (privacidade por design) e escudo (segurança em camadas)"}
+
+## O modelo duplo-cego {#o-modelo-duplo-cego}
+
+O ecossistema tem três papéis — **emissor**, **portador** e **verificador** — e uma propriedade fundamental que chamamos de *duplo-cego*:
+
+- O **emissor não sabe onde a credencial é usada.** Depois de emitida, a credencial vive no dispositivo da pessoa; a verificação não consulta o emissor.
+- O **verificador não precisa se identificar para o emissor** nem depende dele: valida a assinatura criptograficamente, offline se necessário.
+
+Isso impede a construção de um histórico central de "quem usou qual documento onde" — nem mesmo pelo Estado.
+
+## Por que não uma simples API?
+
+A alternativa óbvia parece mais simples:
+
+```
+POST /age_over_18        {"cpf": "123..."}
+200 OK                   {"age_over_18": true}
+```
+
+Mas ela viola os princípios:
+
+- **Sem soberania nem consentimento** — qualquer detentor do CPF consulta o fato; a pessoa não participa.
+- **Sem privacidade** — o emissor vê cada consulta e aprende onde a pessoa está usando o dado (quebra o duplo-cego).
+- **Acoplamento e disponibilidade** — cada verificação depende do emissor estar no ar; não funciona offline.
+- **Não escala como padrão** — cada emissor inventaria sua API; credenciais verificáveis dão um formato único para qualquer fato atestável.
+
+Credenciais verificáveis atendem aos quatro princípios com uma única arquitetura — a que este ARF descreve. Continue por [Papéis e arquitetura](/papeis-e-arquitetura.qmd) para conhecer os papéis e componentes.

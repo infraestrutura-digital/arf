@@ -1,0 +1,5 @@
+---
+title: "Componentes Open Source"
+---
+
+{{< include /_partials/componentes-open-source.qmd >}}

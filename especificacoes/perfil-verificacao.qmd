@@ -1,0 +1,5 @@
+---
+title: "Perfil: Verificação"
+---
+
+{{< include /_partials/perfil-verificacao.qmd >}}

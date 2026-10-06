@@ -1,0 +1,45 @@
+O PodeCrer trata dados pessoais — muitas vezes sensíveis — e por isso a privacidade não é um capítulo de conformidade anexado ao final: é restrição de projeto. Este capítulo mostra como os princípios da [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei nº 13.709/2018) se materializam em decisões de arquitetura, e o que ainda depende da governança.
+
+::: {.callout-note}
+Este capítulo é explicativo e não constitui parecer jurídico. As atribuições formais de papéis LGPD entre os participantes dependem do modelo de governança, *em definição*.
+:::
+
+## Privacidade por arquitetura, não por política
+
+A proteção mais forte que uma política pode oferecer é prometer não usar um dado; a proteção mais forte que uma arquitetura pode oferecer é **tornar o uso impossível**. O PodeCrer opta pela segunda sempre que viável:
+
+| Princípio LGPD | Como a arquitetura o implementa |
+|---|---|
+| **Necessidade / minimização** (art. 6º, III) | O verificador especifica os atributos mínimos na requisição de apresentação; a credencial pode atestar um predicado (`age_over_18`) sem expor o dado de origem (data de nascimento). |
+| **Finalidade e transparência** (art. 6º, I e VI) | Antes de qualquer apresentação, a carteira mostra à pessoa quem pede, o que pede e para quê — e ela pode recusar. |
+| **Livre acesso e autodeterminação** | As credenciais ficam no dispositivo da pessoa, sob seu controle exclusivo; não há repositório central consultável. |
+| **Segurança** (art. 6º, VII e art. 46) | Assinaturas digitais, chaves protegidas por hardware do dispositivo, TLS 1.2+ em todos os canais — ver [Modelo de ameaças](/modelo-de-ameacas.qmd). |
+| **Prevenção** (art. 6º, VIII) | O duplo-cego impede, por construção, a formação de histórico central de uso (ver abaixo). |
+
+## O duplo-cego como medida técnica
+
+A propriedade [duplo-cego](/introducao.qmd#o-modelo-duplo-cego) é a principal medida técnica de privacidade do ecossistema:
+
+- **O emissor não sabe onde a credencial é usada.** A verificação não consulta o emissor; até a checagem de revogação usa listas de status agregadas, que não revelam qual credencial foi consultada nem por quem (ver [Fluxos — status e revogação](/fluxos.qmd#status-e-revogacao)).
+- **O verificador não se identifica para o emissor.** Não existe canal entre eles no momento da apresentação — logo, não existe o dado "quem verificou o quê", nem para os participantes, nem para o Estado.
+
+Em termos LGPD: o dado de rastreamento **não é coletado**, o que é mais forte do que coletá-lo e protegê-lo.
+
+## Consentimento no ato da apresentação
+
+Cada apresentação exige ação afirmativa da pessoa portadora na carteira, após exibição de quem pede, o que pede e para quê — atendendo aos requisitos de consentimento livre, informado e inequívoco (art. 5º, XII). Duas observações:
+
+- O consentimento na carteira **não substitui** a base legal do verificador para tratar os dados recebidos; o verificador é responsável pelo tratamento que faz após recebê-los.
+- Para credenciais emitidas por órgãos públicos, a base legal da **emissão** tende a ser execução de políticas públicas (art. 7º, III / art. 23), não consentimento — o consentimento opera na **apresentação**, que é onde a pessoa exerce controle.
+
+## Deveres dos participantes
+
+A arquitetura minimiza, mas não elimina, o tratamento de dados pelos participantes:
+
+- **Emissores** tratam os dados de suas bases para emitir credenciais e **NÃO DEVEM** registrar em log atributos pessoais além do necessário para auditoria ([Perfil de Emissão](/especificacoes/perfil-emissao.qmd)).
+- **Verificadores** **NÃO DEVEM** reter apresentações além da finalidade declarada e devem pedir o mínimo de atributos ([Perfil de Verificação](/especificacoes/perfil-verificacao.qmd)).
+- **A carteira** processa dados localmente, no dispositivo; seu backend (mimoto) intermedeia fluxos sem constituir repositório de credenciais.
+
+## Em definição
+
+Dependem do modelo de governança e serão detalhados quando decididos: a atribuição formal de papéis LGPD (controlador, operador, controladoria conjunta) por participante e componente compartilhado; o relatório de impacto (RIPD) da infraestrutura; e os requisitos de privacidade no processo de credenciamento de verificadores. O [Roadmap](/roadmap.qmd) acompanha essas pendências.

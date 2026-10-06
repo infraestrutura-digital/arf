@@ -1,0 +1,39 @@
+Termos usados nesta documentação. Nos capítulos, o termo em inglês aparece quando é o consagrado nas especificações.
+
+**Apresentação (presentation)** — ato de a pessoa portadora compartilhar uma ou mais credenciais (ou atributos delas) com um verificador, mediante consentimento. O pacote assinado entregue chama-se *verifiable presentation*.
+
+**BLE (Bluetooth Low Energy)** — canal de rádio usado para apresentação presencial de credenciais sem internet, entre a carteira e o dispositivo do verificador.
+
+**Carteira (wallet)** — aplicativo, no dispositivo da pessoa portadora, que recebe, guarda e apresenta credenciais.
+
+**Credencial verificável (VC)** — equivalente digital de um documento: conjunto de atributos sobre alguém, assinado digitalmente por um emissor, verificável por máquinas. Padrão: W3C Verifiable Credentials Data Model.
+
+**DID (Decentralized Identifier)** — identificador padronizado pelo W3C que resolve para um documento com chaves públicas. No PodeCrer, emissores usam `did:web` (publicado sob o domínio institucional) e portadores usam `did:jwk` (derivado da chave do dispositivo).
+
+**Duplo-cego** — propriedade do ecossistema: o emissor não sabe onde a credencial é usada, e o verificador não precisa se identificar ao emissor nem consultá-lo para validar.
+
+**Emissor (issuer)** — entidade que atesta fatos sobre a pessoa portadora na forma de credenciais assinadas. Componente de referência: Inji Certify.
+
+**Holder binding (vinculação ao portador)** — vínculo criptográfico entre a credencial e uma chave no dispositivo da pessoa, que impede a apresentação por terceiros. Análogo digital da foto no documento físico.
+
+**ICP-Brasil** — Infraestrutura de Chaves Públicas Brasileira (MP 2.200-2/2001), raiz de confiança usada para ancorar as assinaturas do ecossistema (mecanismo em definição).
+
+**LOTE** — modelo em avaliação de "lista de listas de confiança": lista-mestra assinada pela governança apontando para listas setoriais de emissores autorizados (análogo à LoTL do eIDAS).
+
+**Níveis gov.br (bronze/prata/ouro)** — níveis de confiabilidade da conta Acesso gov.br, usados para exigir garantia de autenticação proporcional à criticidade de cada credencial na emissão.
+
+**OpenID4VCI** — protocolo de **emissão** de credenciais (OpenID for Verifiable Credential Issuance).
+
+**OpenID4VP** — protocolo de **apresentação** de credenciais (OpenID for Verifiable Presentations).
+
+**PixelPass** — formato (CBOR + compressão) que embarca a credencial inteira em um QR code, permitindo verificação offline.
+
+**Portador (holder)** — a pessoa sobre quem a credencial atesta fatos e que a controla na própria carteira.
+
+**Registro de confiança (trust registry)** — mecanismo que responde, de forma automatizável, se um emissor é autorizado a emitir determinado tipo de credencial. Modelo brasileiro: em definição.
+
+**Status list** — lista agregada, publicada pelo emissor, pela qual verificadores checam revogação sem revelar qual credencial consultam.
+
+**Verificador (verifier / relying party)** — quem precisa confirmar um fato sobre a pessoa e valida a credencial criptograficamente. Componente de referência: Inji Verify.
+
+**Verificador Universal** — portal público de verificação para quem não tem sistema próprio (credenciais em papel com QR ou compartilhadas por link).

@@ -1,0 +1,5 @@
+---
+title: "Guia: Tornar-se emissor"
+---
+
+{{< include /_partials/cookbook-onboarding-emissor.qmd >}}

@@ -1,0 +1,20 @@
+## Modelos de referência
+
+- [EUDI Wallet — Architecture and Reference Framework](https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/) — o ARF europeu.
+- [swiyu — documentação técnica](https://swiyu-admin-ch.github.io/) — infraestrutura de confiança da e-ID suíça, modelo para a organização deste site.
+
+## Stack Inji / MOSIP
+
+- [inji.io](https://inji.io) — visão geral do stack.
+- [docs.inji.io](https://docs.inji.io) — documentação oficial.
+- [Manual de integração — login único Acesso gov.br](https://manual-roteiro-integracao-login-unico.servicos.gov.br/)
+- [ICP-Brasil (ITI)](https://www.gov.br/iti/pt-br/assuntos/icp-brasil)
+- [docs.esignet.io](https://docs.esignet.io) — eSignet (upstream; não usado no perfil brasileiro).
+- [github.com/injibr](https://github.com/injibr) — customizações brasileiras.
+
+## Padrões
+
+- [W3C Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model/)
+- [W3C Decentralized Identifiers v1.0](https://www.w3.org/TR/did-core/)
+- [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html)
+- [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html)

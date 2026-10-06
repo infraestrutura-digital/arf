@@ -1,0 +1,118 @@
+Os diagramas de sequência dos fluxos centrais do PodeCrer. Cada fluxo é descrito em prosa e em diagrama; os requisitos normativos correspondentes estão nos perfis das [Especificações](/especificacoes/index.qmd), e o passo a passo de implementação, nos [Guias práticos](/cookbooks/index.qmd) — este capítulo explica *como funciona*, não *o que é obrigatório* nem *como implantar*.
+
+::: {.callout-note}
+Os diagramas refletem o comportamento do stack Inji na configuração do perfil brasileiro. Passos que dependem de decisões pendentes estão marcados *a confirmar*.
+:::
+
+## Emissão (OpenID4VCI + Acesso gov.br) {#emissao}
+
+A pessoa escolhe o emissor na carteira, autentica-se com sua conta gov.br e recebe a credencial vinculada a uma chave do seu dispositivo (*holder binding*):
+
+```{mermaid}
+sequenceDiagram
+    autonumber
+    actor P as Pessoa portadora
+    participant W as Carteira (+ mimoto)
+    participant G as Acesso gov.br
+    participant C as Emissor (Inji Certify)
+
+    P->>W: escolhe emissor e credencial
+    W->>C: descoberta de metadados (/.well-known/openid-credential-issuer)
+    W->>G: redireciona para autenticação (OIDC, Authorization Code Flow)
+    P->>G: autentica (conta gov.br, nível bronze/prata/ouro)
+    G-->>W: authorization code
+    W->>C: troca code por access token (a confirmar: gov.br direto ou via adaptador)
+    W->>W: gera par de chaves no dispositivo (hardware quando disponível)
+    W->>C: credential request + proof of possession (did:jwk)
+    C->>C: consulta base de dados e monta a credencial
+    C->>C: assina a credencial (âncora ICP-Brasil: mecanismo a confirmar)
+    C-->>W: credencial verificável (W3C VC, JSON-LD)
+    W-->>P: credencial guardada, protegida por PIN/biometria
+```
+
+Pontos que merecem atenção: a autenticação é do **provedor gov.br**, não do emissor — o emissor recebe a identidade já verificada (CPF como identificador pivô); e a credencial nasce **vinculada à chave do dispositivo** (`credentialSubject.id` = `did:jwk`), o que impede que uma cópia seja apresentada por outra pessoa. Requisitos: [Perfil de Emissão](/especificacoes/perfil-emissao.qmd).
+
+## Apresentação online (OpenID4VP) {#apresentacao-online}
+
+O verificador pede; a pessoa consente; a carteira entrega uma *verifiable presentation* assinada. O emissor **não participa** — é o duplo-cego em ação:
+
+```{mermaid}
+sequenceDiagram
+    autonumber
+    actor P as Pessoa portadora
+    participant W as Carteira
+    participant V as Verificador (Inji Verify)
+
+    V->>V: cria presentation request (atributos mínimos)
+    V-->>P: exibe QR code (cross-device) ou deep link (mesmo aparelho)
+    P->>W: escaneia o QR / abre o link
+    W->>V: obtém a requisição de apresentação
+    W-->>P: mostra quem pede, o que pede e para quê
+    P->>W: consente
+    W->>W: monta e assina a verifiable presentation
+    W->>V: envia a apresentação (OpenID4VP)
+    V->>V: valida assinaturas, holder binding, validade, status
+    V-->>V: resultado (sem consultar o emissor)
+```
+
+Para sistemas que integram a verificação via API (transação com `vp-request`, long-poll de status e `vp-result`), ver a seção [A API de Verificação](/cookbooks/onboarding-verificador.qmd#api-de-verificacao) no guia do verificador.
+
+## Verificação offline — QR embarcado (PixelPass)
+
+A própria credencial vai dentro do QR code (formato PixelPass: CBOR + compressão). A validação é local, sem rede de nenhum dos lados:
+
+```{mermaid}
+sequenceDiagram
+    autonumber
+    actor P as Pessoa portadora
+    participant W as Carteira (ou papel impresso)
+    participant V as Verificador (Inji Verify offline)
+
+    P->>W: exibe o QR embarcado da credencial
+    V->>W: escaneia o QR
+    V->>V: decodifica PixelPass e extrai a credencial
+    V->>V: valida assinatura com material criptográfico pré-sincronizado
+    V->>V: valida integridade e validade temporal
+    Note over V: status de revogação não pode ser checado offline —<br/>o verificador DEVE sinalizar essa limitação
+    V-->>P: resultado da validação
+```
+
+## Apresentação presencial — BLE
+
+Onde não há internet para nenhuma das partes e o QR não basta (credenciais maiores, seleção de atributos), a credencial trafega por Bluetooth Low Energy (implementação Tuvali; especificação *openid4vp-over-ble: a confirmar*):
+
+```{mermaid}
+sequenceDiagram
+    autonumber
+    actor P as Pessoa portadora
+    participant W as Carteira
+    participant V as Dispositivo do verificador
+
+    V-->>W: anuncia a solicitação (QR de pareamento / advertisement BLE)
+    W->>V: estabelece conexão BLE segura (chaves efêmeras)
+    W-->>P: mostra o que será compartilhado
+    P->>W: consente
+    W->>V: transmite a apresentação pelo canal cifrado
+    V->>V: valida localmente (como no fluxo offline)
+    V-->>P: resultado da validação
+```
+
+## Status e revogação {#status-e-revogacao}
+
+O emissor pode revogar uma credencial; verificadores detectam a revogação consultando uma **status list** — uma lista agregada, publicada em URL estável, que não revela quem consulta o quê *(mecanismo e versão da status list: a confirmar)*:
+
+```{mermaid}
+sequenceDiagram
+    autonumber
+    participant C as Emissor (Inji Certify)
+    participant S as Status list (URL pública)
+    participant V as Verificador
+
+    C->>S: publica/atualiza a status list (milhares de credenciais por lista)
+    Note over C,S: a revogação altera 1 bit na lista agregada
+    V->>S: baixa a status list (sem autenticação)
+    V->>V: confere o bit da credencial apresentada
+    Note over S,V: o emissor vê apenas downloads da lista inteira —<br/>não sabe qual credencial foi verificada, nem por quem
+```
+
+É este desenho que preserva o duplo-cego mesmo na revogação: a consulta de status **não** identifica a credencial individual para o emissor. Requisitos: [Perfil de Credencial Verificável](/especificacoes/perfil-vc.qmd) e [Perfil de Verificação](/especificacoes/perfil-verificacao.qmd).

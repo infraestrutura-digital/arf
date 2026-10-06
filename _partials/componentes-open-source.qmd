@@ -1,0 +1,57 @@
+Todos os componentes do PodeCrer são open source. As customizações brasileiras vivem na organização [**injibr**](https://github.com/injibr), como forks do upstream [MOSIP/Inji](https://github.com/mosip). A regra geral de contribuição: mudanças genéricas vão para o upstream; apenas o que é específico do Brasil (configuração, tradução, integrações locais) fica nos forks.
+
+## Repositórios
+
+### Inji Certify — emissão
+
+Serviço de emissão de credenciais verificáveis via OpenID4VCI. Conecta-se às bases de dados do emissor por meio de plugins (CSV, banco relacional, integração MOSIP IDA ou plugin próprio).
+
+- Fork brasileiro: [injibr/inji-certify](https://github.com/injibr/inji-certify)
+- Upstream: [mosip/inji-certify](https://github.com/mosip/inji-certify)
+- Documentação: [docs.inji.io](https://docs.inji.io)
+
+### Inji Verify — verificação
+
+Portal e serviço de verificação: valida assinatura, integridade e status de credenciais apresentadas por upload, QR code (inclusive offline via PixelPass) ou fluxo OpenID4VP.
+
+- Fork brasileiro: [injibr/inji-verify](https://github.com/injibr/inji-verify)
+- Upstream: [mosip/inji-verify](https://github.com/mosip/inji-verify)
+
+### Verificador Universal
+
+Portal público de verificação construído sobre o Inji Verify, para quem precisa validar uma credencial **sem ter sistema próprio**. Cobre dois cenários: credencial impressa em papel com QR code de verificação (o verificador escaneia e segue o link) e credencial compartilhada por link em mensagem (o destinatário abre o link). Em ambos, o site mostra os dados validados do documento e opções de download. Ver os fluxos no [cookbook do verificador](/cookbooks/onboarding-verificador.qmd).
+
+- Repositório: *a publicar em injibr*
+
+### mimoto — backend da carteira
+
+BFF (*backend for frontend*) da carteira: intermedeia OpenID4VCI entre o app e os emissores, gerencia metadados de emissores disponíveis e apoia funcionalidades do app.
+
+- Fork brasileiro: [injibr/mimoto](https://github.com/injibr/mimoto)
+- Upstream: [mosip/mimoto](https://github.com/mosip/mimoto)
+
+### inji-config — configuração
+
+Configurações centralizadas (Spring Cloud Config) dos serviços do ecossistema para os ambientes brasileiros.
+
+- Fork brasileiro: [injibr/inji-config](https://github.com/injibr/inji-config)
+- Upstream: [mosip/inji-config](https://github.com/mosip/inji-config)
+
+### Inji Wallet — carteira móvel
+
+Aplicativo móvel (Android/iOS) da pessoa portadora: download, guarda e apresentação de credenciais, com compartilhamento presencial via BLE.
+
+- Upstream: [mosip/inji-wallet](https://github.com/mosip/inji-wallet)
+- Fork brasileiro: *a publicar em injibr*
+
+### Acesso gov.br — autenticação
+
+No perfil brasileiro, a autenticação da pessoa na emissão usa o **Acesso gov.br** (login único do Governo Federal), que não é um componente deste stack — a integração é via OpenID Connect. O eSignet ([mosip/esignet](https://github.com/mosip/esignet)), usado no upstream, não faz parte do perfil brasileiro.
+
+## Como usar a infraestrutura
+
+Emissores e verificadores interessados devem seguir os [Guias práticos](/cookbooks/index.qmd), que descrevem o passo a passo técnico de integração, os pré-requisitos e as ferramentas de teste disponíveis. O processo formal de credenciamento junto à governança brasileira está *em definição* — ver [Confiança e governança](/confianca-e-governanca.qmd).
+
+## Contribuindo
+
+Issues e pull requests são bem-vindos nos repositórios da organização injibr. Para bugs do stack genérico, prefira abrir a issue no repositório upstream do MOSIP.

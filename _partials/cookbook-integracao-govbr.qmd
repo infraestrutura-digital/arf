@@ -1,0 +1,50 @@
+:::: {.content-visible when-format="html"}
+::: {.page-banner}
+`banner_cookbook_govbr.png` · 10:3
+
+**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de uma impressão digital dentro de um círculo, traço uniforme e cantos arredondados, centralizado; abaixo, o texto "autenticação" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
+:::
+::::
+
+Durante a emissão, a pessoa portadora precisa se autenticar perante o emissor. No perfil brasileiro, a autenticação é feita pelo **Acesso gov.br** (login único do Governo Federal), via **OpenID Connect** — em vez do eSignet usado no stack Inji upstream.
+
+::: {.callout-warning}
+## Rascunho
+A forma de integração do Acesso gov.br ao fluxo OpenID4VCI do Inji Certify (integração direta como Authorization Server ou intermediada por um adaptador) está *a confirmar*.
+:::
+
+## Pré-requisitos
+
+- Ser (ou estar implantando) um emissor — este guia complementa o [guia do emissor](/cookbooks/onboarding-emissor.qmd).
+- Órgão apto a credenciar-se no login único gov.br (ver [manual de integração](https://manual-roteiro-integracao-login-unico.servicos.gov.br/)).
+- URLs de redirecionamento definidas para os ambientes de homologação e produção.
+
+## Papel do Acesso gov.br no fluxo de emissão
+
+1. A carteira inicia o download da credencial e a pessoa é direcionada ao login do gov.br.
+2. A pessoa se autentica com sua conta gov.br (senha, biometria do app, certificado digital).
+3. Os tokens OAuth 2.0/OIDC resultantes autorizam o Inji Certify a emitir a credencial daquela pessoa (CPF como identificador pivô).
+
+## Passo 1 — Credenciar o cliente no gov.br
+
+Solicite o credenciamento do serviço junto à equipe do login único (`client_id`/`client_secret` ou chaves), informando as URLs de redirecionamento. Consulte o [manual de integração do login único](https://manual-roteiro-integracao-login-unico.servicos.gov.br/).
+
+## Passo 2 — Níveis e selos de confiabilidade
+
+O gov.br classifica contas em níveis (bronze, prata, ouro). Defina, por tipo de credencial, o **nível mínimo** exigido para emissão — por exemplo, credenciais de identidade exigem nível ouro ou prata. *(Mapeamento por credencial: em definição.)*
+
+## Passo 3 — Configurar o Certify
+
+Aponte o Inji Certify para o Acesso gov.br como Authorization Server no inji-config (`authorization_endpoint`, `token_endpoint`, JWKS do gov.br) ou configure o adaptador de integração *(a confirmar conforme decisão de arquitetura)*.
+
+## Checklist
+
+- [ ] Cliente credenciado no gov.br (`client_id` emitido; URLs de redirecionamento corretas)
+- [ ] Nível de confiabilidade mínimo definido por tipo de credencial *(mapeamento em definição)*
+- [ ] Certify apontando para o gov.br como Authorization Server *(ou adaptador, conforme decisão pendente)*
+- [ ] Fluxo de emissão testado com conta gov.br de homologação
+
+## Referências
+
+- [Manual de integração — login único gov.br](https://manual-roteiro-integracao-login-unico.servicos.gov.br/)
+- Upstream (alternativa não usada no perfil brasileiro): [eSignet](https://docs.esignet.io/)

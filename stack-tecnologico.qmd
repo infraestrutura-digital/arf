@@ -1,0 +1,5 @@
+---
+title: "Decisões de arquitetura técnica"
+---
+
+{{< include /_partials/stack-tecnologico.qmd >}}

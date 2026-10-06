@@ -1,0 +1,124 @@
+---
+title: "PodeCrer — ARF"
+subtitle: "Architecture Reference Framework da Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil"
+author: "injibr"
+date: today
+format:
+  typst:
+    template-partials:
+      - typst-show.typ
+    toc: true
+    section-numbering: "1.1."
+output-file: arf-podecrer.pdf
+---
+
+Este documento é a versão consolidada, para leitura e impressão, do Architecture Reference Framework (ARF) do PodeCrer. O conteúdo é gerado da mesma fonte que o site <https://injibr.github.io/arf>; em caso de divergência, o site prevalece por ser atualizado continuamente.
+
+::: {.callout-warning}
+## Estágio: rascunho
+Esta documentação reflete o estado atual da implementação. Seções marcadas como *em definição* dependem de decisões de governança e arquitetura ainda não tomadas.
+:::
+
+# Sobre esta documentação {.unnumbered}
+
+{{< include /_partials/sobre.qmd >}}
+
+# Parte I — Entenda {.unnumbered}
+
+# Introdução
+
+{{< include /_partials/introducao.qmd >}}
+
+# Funcionalidades e jornadas
+
+{{< include /_partials/funcionalidades-e-jornadas.qmd >}}
+
+# Papéis e arquitetura
+
+{{< include /_partials/papeis-e-arquitetura.qmd >}}
+
+# Decisões de arquitetura técnica
+
+{{< include /_partials/stack-tecnologico.qmd >}}
+
+# Fluxos em detalhe
+
+{{< include /_partials/fluxos.qmd >}}
+
+# Confiança e governança
+
+{{< include /_partials/confianca-e-governanca.qmd >}}
+
+# Privacidade e LGPD
+
+{{< include /_partials/privacidade-lgpd.qmd >}}
+
+# Modelo de ameaças
+
+{{< include /_partials/modelo-de-ameacas.qmd >}}
+
+# Componentes open source
+
+{{< include /_partials/componentes-open-source.qmd >}}
+
+# Parte II — Integre {.unnumbered}
+
+# Guias práticos
+
+{{< include /_partials/cookbooks-index.qmd >}}
+
+# Guia: tornar-se emissor
+
+{{< include /_partials/cookbook-onboarding-emissor.qmd >}}
+
+# Guia: tornar-se verificador
+
+{{< include /_partials/cookbook-onboarding-verificador.qmd >}}
+
+# Guia: integração com o Acesso gov.br
+
+{{< include /_partials/cookbook-integracao-govbr.qmd >}}
+
+# Guia: carteira
+
+{{< include /_partials/cookbook-carteira.qmd >}}
+
+# Parte III — Especificações {.unnumbered}
+
+# Convenções
+
+{{< include /_partials/especificacoes-index.qmd >}}
+
+# Perfil: Identificadores
+
+{{< include /_partials/perfil-identificadores.qmd >}}
+
+# Perfil: Credencial Verificável
+
+{{< include /_partials/perfil-vc.qmd >}}
+
+# Perfil: Emissão
+
+{{< include /_partials/perfil-emissao.qmd >}}
+
+# Perfil: Verificação
+
+{{< include /_partials/perfil-verificacao.qmd >}}
+
+# Perfil: Confiança
+
+{{< include /_partials/perfil-confianca.qmd >}}
+
+# Anexos {.unnumbered}
+
+# Roadmap
+
+{{< include /_partials/roadmap.qmd >}}
+
+# Glossário {.unnumbered}
+
+{{< include /_partials/glossario.qmd >}}
+
+# Referências {.unnumbered}
+
+{{< include /_partials/referencias.qmd >}}

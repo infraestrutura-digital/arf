@@ -1,0 +1,62 @@
+Para que uma credencial tenha valor, o verificador precisa confiar em três coisas: que a **assinatura** é válida (criptografia), que o **emissor** é quem diz ser (resolução do identificador) e que o emissor é **autorizado** a emitir aquele tipo de credencial (governança). Os dois primeiros pontos o stack técnico resolve — ver [Decisões de arquitetura técnica](/stack-tecnologico.qmd). Este capítulo trata do terceiro: a camada que transforma criptografia em confiança institucional.
+
+::: {.callout-warning}
+## Em definição
+Este é o tema menos maduro do PodeCrer: o modelo de governança, o registro de confiança e o processo de credenciamento de participantes ainda não foram decididos. O capítulo apresenta o problema e os modelos em avaliação; os requisitos que independem da decisão estão no [Perfil de Confiança](/especificacoes/perfil-confianca.qmd).
+:::
+
+## O problema
+
+A assinatura prova que a credencial veio de um DID; não prova que aquele DID pertence a uma entidade legítima nem que ela pode emitir aquele tipo de credencial. Qualquer um pode publicar um `did:web` e assinar um "diploma". É preciso uma âncora institucional que responda, de forma automatizável: **este emissor está autorizado a emitir esta credencial?**
+
+## Modelos em avaliação
+
+1. **Lista de confiança central (LOTE)** — autoridade da governança publica lista assinada de emissores/verificadores autorizados por tipo de credencial (modelo análogo às *trusted lists* do eIDAS europeu). Detalhado abaixo.
+2. **Protocolo de confiança baseado em credenciais** — declarações de confiança são elas próprias VCs emitidas pela autoridade de governança a participantes (modelo análogo ao Swiss Trust Protocol).
+3. **Ancoragem em infraestrutura existente** — aproveitamento de ICP-Brasil e/ou do cadastro de integrações gov.br como raiz de confiança.
+
+Os modelos não são mutuamente exclusivos: a LOTE pode ser assinada com certificado ICP-Brasil (combinando 1 e 3).
+
+## Modelo 1 em detalhe: LOTE — lista de listas de confiança
+
+O eIDAS europeu resolve o problema da âncora institucional com confiança em **dois níveis**, padronizada pela [ETSI TS 119 612](https://www.etsi.org/deliver/etsi_ts/119600_119699/119612/02.04.01_60/ts_119612v020401p.pdf):
+
+- **Nível 1 — listas de confiança (TL):** cada Estado-membro publica um XML assinado listando seus prestadores de serviços de confiança qualificados, com status de cada serviço, certificados e histórico de mudanças.
+- **Nível 2 — lista de listas (LoTL):** a Comissão Europeia publica uma lista-mestra assinada cujas entradas são ponteiros para as listas nacionais — a URL de cada TL e os certificados que a assinam. Os certificados que assinam a própria LoTL são publicados no Jornal Oficial da UE (o *bootstrap* da confiança).
+
+A verificação vira uma cadeia automatizável: confia na LoTL → resolve a TL do país → valida a assinatura da TL → encontra o prestador e checa o status na data relevante.
+
+### Adaptação brasileira
+
+A estrutura equivalente para o PodeCrer:
+
+- A **autoridade de governança** publica a **LOTE brasileira**, assinada (por exemplo, com certificado ICP-Brasil), apontando para listas setoriais.
+- Cada **órgão regulador setorial** mantém sua lista de emissores autorizados por tipo de credencial: MGI (identidade, ECA Digital), MEC (diplomas), Senatran (habilitação), e assim por diante.
+- Verificadores configuram **uma única âncora** (a LOTE) e resolvem automaticamente a autorização de qualquer emissor.
+
+Isso distribui a governança — cada setor credencia seus emissores no próprio ritmo — sem fragmentar a confiança. A ICP-Brasil já opera estrutura análoga em um nível (AC-Raiz → lista de ACs credenciadas); a LOTE generaliza o padrão para emissores de credenciais verificáveis.
+
+### Ferramental
+
+Não é preciso gerar o XML "na mão". O ecossistema eIDAS mantém software open source reutilizável:
+
+- **[DSS (Digital Signature Service)](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467109107/Digital+Signature+Service+-+DSS)** — biblioteca Java open source da Comissão Europeia: valida e processa TLs/LoTL conforme ETSI TS 119 612 (TLv6 a partir do DSS 6.2) e assina XAdES, o formato de assinatura exigido para as listas.
+- **TL Manager** — aplicação web open source da Comissão usada pelos operadores nacionais para criar, editar, validar e assinar suas trusted lists.
+
+Um fluxo de manutenção típico para uma lista setorial (por exemplo, a do MGI): manter os emissores em uma base estruturada (ou YAML em repositório Git, com revisão por pull request) → gerar o XML ETSI TS 119 612 → validar contra o schema e as regras da especificação (via DSS) → assinar XAdES com chave em HSM (certificado ICP-Brasil do órgão) → publicar em URL estável com `NextUpdate` definido. O mesmo pipeline serve para a LOTE.
+
+::: {.callout-note}
+## Formato em avaliação
+A ETSI TS 119 612 é XML/XAdES, herdada do mundo eIDAS. Para o PodeCrer também está em avaliação publicar as listas em formato JSON assinado (mais natural ao stack de VCs), mantendo a mesma estrutura de dois níveis. A decisão acompanha o trabalho da ETSI para listas de confiança no ecossistema EUDI.
+:::
+
+## Governança do ecossistema
+
+Além do registro de confiança, a governança precisa definir — tudo *em definição*:
+
+- **Quem opera** cada componente compartilhado em produção (backend da carteira, Verificador Universal, LOTE).
+- **Critérios e processo de credenciamento** de emissores e verificadores, incluindo requisitos de segurança operacional e prazos de revogação de autorização.
+- **Ambientes** de homologação e produção: domínios, endpoints e o caminho formal de um participante entre eles.
+- **Arcabouço legal** aplicável: LGPD (ver [Privacidade e LGPD](/privacidade-lgpd.qmd)), gov.br e ICP-Brasil.
+
+O que independe do modelo escolhido já está fixado como requisito no [Perfil de Confiança](/especificacoes/perfil-confianca.qmd): checagem automatizável e auditável da autorização, efeito da revogação em prazo definido e impossibilidade de rastreamento de verificações individuais pela autoridade central.

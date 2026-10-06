@@ -1,0 +1,65 @@
+![O stack do PodeCrer em camadas: componentes Inji sobre os protocolos OpenID4VCI/VP, credenciais W3C VC com assinatura ancorada na ICP-Brasil, identificadores did:web, autenticação via Acesso gov.br e transporte TLS 1.2+.](assets/images/diagrama_stack.png){fig-alt="Diagrama em camadas: Inji Certify, Inji Wallet e Inji Verify no topo; abaixo, camadas de autenticação (Acesso gov.br via OpenID Connect), protocolos (OpenID4VCI e OpenID4VP), credencial (W3C VC JSON-LD com assinatura ancorada na ICP-Brasil), identificadores (did:web, W3C DID v1.0) e transporte (TLS 1.2+)"}
+
+O PodeCrer adota o stack open source **Inji** (projeto [MOSIP](https://mosip.io)), que implementa padrões abertos de credenciais verificáveis. A tabela abaixo resume as tecnologias em uso; itens marcados com *a confirmar* dependem da versão implantada no perfil brasileiro e serão fixados nas [Especificações](/especificacoes/index.qmd).
+
+| Aspecto | Tecnologia adotada |
+|---|---|
+| Identificadores de emissores | [W3C Decentralized Identifiers v1.0](https://www.w3.org/TR/did-core/), método `did:web` |
+| Identificadores de portadores | `did:jwk` (derivado da chave do dispositivo) |
+| Formato de credencial | [W3C Verifiable Credentials Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/) (JSON-LD); suporte a mDoc/mDL (ISO 18013-5) e SD-JWT VC *a confirmar* |
+| Assinaturas | Ancoradas na **ICP-Brasil** (ver [Assinatura e ICP-Brasil](#assinatura-e-icp-brasil)); esquema criptográfico do Inji upstream: Ed25519Signature2020 (JSON-LD) e RS256/PS256 (JWT) — *combinação exata a confirmar* |
+| Protocolo de emissão | [OpenID4VCI](https://openid.net/specs/openid-4-verifiable-credential-issuance-1_0.html) |
+| Protocolo de apresentação | [OpenID4VP](https://openid.net/specs/openid-4-verifiable-presentations-1_0.html) |
+| Autenticação na emissão | [Acesso gov.br](https://www.gov.br/governodigital/pt-br/identidade/conta-gov-br) (OpenID Connect / OAuth 2.0) |
+| Status/revogação | Mecanismo de status list do W3C VC *(versão a confirmar)* |
+| QR code embarcado | [PixelPass](https://github.com/mosip/pixelpass) (CBOR + compressão) para verificação offline |
+| Compartilhamento presencial | Bluetooth Low Energy (Tuvali) |
+| Vinculação ao dispositivo | Chaves protegidas por hardware do dispositivo (Android Keystore / Apple Secure Enclave), com fallback em software |
+
+::: {.callout-note}
+## Decisão de escopo
+Assim como a Suíça, o Brasil parte de **um único stack tecnológico** para reduzir complexidade e maximizar interoperabilidade interna, sem descartar suporte futuro a múltiplos stacks (por exemplo, para interoperabilidade com o EUDI Wallet europeu).
+:::
+
+## Identificadores — did:web {#identificadores-did-web}
+
+Emissores e verificadores são identificados por **DIDs** (Decentralized Identifiers) do W3C. O método adotado é o `did:web`: o documento DID — contendo as chaves públicas do emissor — é publicado em um endereço HTTPS sob o domínio da entidade (por exemplo, `did:web:exemplo.gov.br` resolve para `https://exemplo.gov.br/.well-known/did.json`).
+
+A escolha do `did:web` privilegia simplicidade de implantação: qualquer órgão com um domínio institucional consegue publicar seu DID sem depender de ledger ou registro adicional. A âncora de confiança é a própria hierarquia de domínios (DNS + TLS), reforçada pelos domínios `.gov.br`.
+
+::: {.callout-tip}
+## Comparação com o modelo suíço
+O swiyu adotou `did:webvh`, que acrescenta histórico verificável ao `did:web`. A adoção de `did:webvh` (ou outro mecanismo de histórico/rotação de chaves auditável) no perfil brasileiro está em avaliação.
+:::
+
+## Formato de credencial — W3C VC {#formato-de-credencial-w3c-vc}
+
+As credenciais seguem o **W3C Verifiable Credentials Data Model** em serialização JSON-LD, formato nativo do Inji Certify. Isso garante credenciais semanticamente ricas, com contextos publicados e assinatura por Data Integrity proofs (Ed25519Signature2020).
+
+O roadmap do Inji upstream inclui suporte a **mDoc/mDL** (ISO/IEC 18013-5) e **SD-JWT VC** (com divulgação seletiva), relevantes para interoperabilidade internacional — a adoção no perfil brasileiro está *a confirmar*.
+
+## Assinatura e ICP-Brasil {#assinatura-e-icp-brasil}
+
+Diferentemente do modelo suíço — em que a confiança nas chaves dos emissores é ancorada em um registro central (Base Registry) —, o perfil brasileiro ancora a assinatura das credenciais na **ICP-Brasil**, a Infraestrutura de Chaves Públicas Brasileira (MP 2.200-2/2001), aproveitando uma raiz de confiança já estabelecida em lei e amplamente auditada.
+
+::: {.callout-warning}
+## Mecanismo em definição
+A forma exata de integração está *a confirmar*. As alternativas em avaliação:
+
+1. **Assinatura direta com certificado ICP-Brasil** — a credencial é assinada com a chave do certificado ICP-Brasil do emissor (RSA, via JWS RS256/PS256), com a cadeia de certificação embarcada (`x5c`) ou referenciada no documento DID. Vantagem: validade jurídica direta; custo: algoritmos RSA são mais pesados e o Inji upstream é otimizado para Ed25519.
+2. **Vinculação de chaves** — a credencial é assinada com Ed25519 (padrão do Inji Certify), e a chave Ed25519 publicada no `did:web` do emissor é, por sua vez, certificada/atestada por um certificado ICP-Brasil da entidade. Vantagem: mantém o stack upstream intacto; a ICP-Brasil entra como âncora da identidade do emissor, não da assinatura de cada credencial.
+
+A escolha impacta o [Perfil de Credencial](/especificacoes/perfil-vc.qmd), o [Perfil de Identificadores](/especificacoes/perfil-identificadores.qmd) e o [Perfil de Confiança](/especificacoes/perfil-confianca.qmd).
+:::
+
+## Protocolos — OpenID4VCI e OpenID4VP
+
+A **emissão** usa OpenID4VCI: a carteira obtém uma autorização (via Acesso gov.br), solicita a credencial ao Inji Certify e a recebe vinculada a uma chave do dispositivo. A **apresentação** online usa OpenID4VP: o verificador envia uma requisição de apresentação, a pessoa consente na carteira e uma *verifiable presentation* assinada é entregue ao verificador.
+
+Para cenários **offline/presenciais**, o ecossistema Inji oferece dois mecanismos: QR code embarcado (PixelPass) contendo a própria credencial, verificável pelo Inji Verify sem rede, e compartilhamento por Bluetooth Low Energy (Tuvali/openID4VP over BLE). Os diagramas de sequência de todos esses fluxos estão em [Fluxos em detalhe](/fluxos.qmd).
+
+## Autenticação — Acesso gov.br
+
+No perfil brasileiro, a autenticação da pessoa portadora durante a emissão é feita pelo **Acesso gov.br** (login único do Governo Federal), via OpenID Connect — em vez do eSignet usado no stack Inji upstream. A conta gov.br traz consigo os **níveis de confiabilidade** (bronze, prata, ouro), que permitem exigir garantias de autenticação proporcionais à criticidade de cada tipo de credencial.
+
+A forma de integração ao fluxo OpenID4VCI do Inji Certify — gov.br como Authorization Server direto ou intermediado por um adaptador — está *a confirmar*. Ver o [cookbook de integração](/cookbooks/integracao-govbr.qmd).

@@ -1,0 +1,102 @@
+:::: {.content-visible when-format="html"}
+::: {.page-banner}
+`banner_cookbook_verificador.png` · 10:3
+
+**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de uma lupa com um sinal de visto (check) dentro da lente, traço uniforme e cantos arredondados, centralizado; abaixo, o texto "verificador" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
+:::
+::::
+
+Este guia mostra como **verificar credenciais** usando o [Inji Verify](https://github.com/injibr/inji-verify).
+
+::: {.callout-warning}
+## Rascunho
+Endpoints dos ambientes brasileiros serão adicionados quando publicados.
+:::
+
+## Pré-requisitos
+
+- Docker e Docker Compose para subir o Inji Verify (ou uso do Verificador Universal, sem infraestrutura própria).
+- Definição clara da **finalidade** da verificação e dos **atributos mínimos** necessários (LGPD — ver [Privacidade e LGPD](/privacidade-lgpd.qmd)).
+- Para o fluxo online: um sistema capaz de exibir QR code / deep link e consumir a API de verificação.
+- Leitura prévia: [Fluxos em detalhe — apresentação](/fluxos.qmd#apresentacao-online) e [Perfil de Verificação](/especificacoes/perfil-verificacao.qmd).
+
+## Modos de verificação
+
+O Inji Verify suporta três modos:
+
+1. **Upload/scan de QR code** — a credencial inteira está embarcada no QR (formato PixelPass). Funciona **offline**: a validação de assinatura é local.
+2. **OpenID4VP** — o verificador gera uma requisição de apresentação; a pessoa aponta a carteira para o QR da requisição e envia uma *verifiable presentation*.
+3. **BLE presencial** — recebimento da credencial por Bluetooth Low Energy, sem internet em nenhum dos lados.
+
+## Passo 1 — Subir o Inji Verify
+
+```bash
+git clone https://github.com/injibr/inji-verify
+cd inji-verify
+docker compose up -d
+```
+
+O portal web permite verificação imediata por upload/scan. Para integrar a verificação ao seu sistema, use o serviço de verificação via API.
+
+## Passo 2 — Validar o que importa
+
+Uma verificação completa checa:
+
+- **Assinatura** — resolução do `did:web` do emissor e validação criptográfica;
+- **Integridade** — a credencial não foi alterada;
+- **Validade temporal** — datas de emissão/expiração;
+- **Status** — a credencial não foi revogada;
+- **Autorização do emissor** — o emissor é autorizado a emitir aquele tipo *(depende do registro de confiança brasileiro, em definição)*.
+
+## Passo 3 — Fluxo OpenID4VP (online)
+
+1. Seu sistema cria uma *presentation request* especificando o tipo de credencial e os atributos necessários (minimização de dados: peça só o que precisa).
+2. O Inji Verify exibe o QR da requisição.
+3. A pessoa escaneia com a carteira, consente e envia a apresentação.
+4. Seu sistema recebe o resultado da validação via callback/polling.
+
+## A API de Verificação {#api-de-verificacao}
+
+![Diagrama de sequência da verificação: a plataforma digital cria a requisição de apresentação no Inji Verify, monta o link para a carteira e acompanha a transação por long-poll até o resultado.](assets/images/fluxo-api-verificacao.svg){fig-alt="Diagrama de sequência entre Plataforma Digital e Inji Verify: POST /vp-request retorna 201 com transactionId e requestId; a plataforma monta o deep link ou QR code; GET /vp-request/requestId/status em long-poll até VP_SUBMITTED, enquanto a carteira da pessoa interage com o Inji Verify; GET /vp-result/transactionId retorna o resultado da verificação"}
+
+A integração do seu sistema ao serviço de verificação segue uma sequência transacional:
+
+1. **Solicita apresentação** — `POST /vp-request` informando o tipo de credencial e os atributos desejados; recebe `201 Created` com `transactionId` e `requestId`.
+2. **Monta o link de apresentação** — a requisição OpenID4VP é exposta como **QR code** (cenário *cross-device*: a pessoa escaneia com o celular) ou como **deep link** (cenário *app-to-app*: seu app abre a carteira no mesmo aparelho).
+3. **Aguarda via long-poll** — `GET /vp-request/{requestId}/status` até a carteira da pessoa enviar a apresentação (`VP_SUBMITTED`); a validação das provas e da credencial acontece no serviço.
+4. **Recebe o resultado** — `GET /vp-result/{transactionId}`:
+
+```json
+{
+  "transactionId": "...",
+  "vpResultStatus": "SUCCESS",
+  "vcResults": ["..."]
+}
+```
+
+O resultado indica o status da apresentação (`vpResultStatus`) e a validação de cada credencial apresentada (`vcResults`).
+
+## Verificador Universal
+
+Para quem não tem sistema próprio, o **Verificador Universal** é um portal público de verificação que cobre dois cenários:
+
+**Credencial em papel** — a pessoa apresenta um documento impresso com QR code de verificação; quem verifica escaneia o QR e segue o link; o portal mostra os dados validados do documento e opções de download.
+
+**Credencial via link em mensagem** — a pessoa compartilha a credencial diretamente pela carteira; o destinatário recebe um link por mensagem e o abre; o portal mostra os dados validados.
+
+*(Repositório e endpoints: a publicar.)*
+
+## Boas práticas
+
+- Peça o **mínimo de atributos** necessário (LGPD: princípio da necessidade).
+- Não armazene a credencial apresentada além do necessário para a finalidade declarada.
+- Registre a finalidade da verificação — requisito provável do futuro credenciamento de verificadores brasileiro.
+
+## Checklist
+
+- [ ] Requisição de apresentação pede apenas os atributos necessários
+- [ ] Validações obrigatórias ativas: assinatura, holder binding, validade, status ([Perfil de Verificação](/especificacoes/perfil-verificacao.qmd))
+- [ ] Cenário offline sinaliza quando o status de revogação não pôde ser checado
+- [ ] Política de retenção das apresentações definida e implementada
+- [ ] Checagem de autorização do emissor planejada *(registro de confiança em definição)*
+- [ ] Credenciamento junto à governança brasileira *(processo em definição)*

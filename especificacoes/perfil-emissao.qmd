@@ -1,0 +1,5 @@
+---
+title: "Perfil: Emissão"
+---
+
+{{< include /_partials/perfil-emissao.qmd >}}

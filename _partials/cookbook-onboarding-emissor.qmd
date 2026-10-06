@@ -1,0 +1,85 @@
+:::: {.content-visible when-format="html"}
+::: {.page-banner}
+`banner_cookbook_emissor.png` · 10:3
+
+**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de um prédio institucional com colunas (estilo pórtico), traço uniforme e cantos arredondados, centralizado; abaixo, o texto "emissor" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
+:::
+::::
+
+Este guia mostra como colocar um **emissor de credenciais** no ar usando o [Inji Certify](https://github.com/injibr/inji-certify).
+
+::: {.callout-warning}
+## Rascunho
+Passos específicos dos ambientes brasileiros (credenciamento, endpoints, domínios) serão adicionados quando publicados. Este guia cobre o fluxo técnico genérico do stack Inji.
+:::
+
+## Pré-requisitos
+
+- Domínio institucional próprio com HTTPS (órgãos federais: `.gov.br`), onde publicar `did:web` e contextos JSON-LD.
+- Docker e Docker Compose em ambiente de homologação próprio.
+- Acesso de leitura à base de dados que contém os fatos a atestar.
+- Credenciamento no Acesso gov.br para autenticação de portadores — ver [Integração com o Acesso gov.br](/cookbooks/integracao-govbr.qmd).
+- HSM ou cofre de segredos para a chave de assinatura (produção).
+- Leitura prévia: [Fluxos em detalhe — emissão](/fluxos.qmd#emissao) e [Perfil de Emissão](/especificacoes/perfil-emissao.qmd).
+
+## Visão geral
+
+Para emitir credenciais, você precisa de:
+
+1. Um **identificador** (`did:web`) publicado sob seu domínio institucional, com as chaves públicas de assinatura.
+2. Uma instância do **Inji Certify** configurada com o(s) tipo(s) de credencial que você emite.
+3. Um **plugin de dados** que conecta o Certify à sua base (CSV, banco relacional, API própria ou MOSIP IDA).
+4. A **autenticação da pessoa portadora** via Acesso gov.br — ver [Integração com o Acesso gov.br](/cookbooks/integracao-govbr.qmd).
+
+## Passo 1 — Publicar seu did:web
+
+Gere um par de chaves (Ed25519) e publique o documento DID no seu domínio:
+
+```
+https://seu-orgao.gov.br/.well-known/did.json
+```
+
+O documento deve conter a chave pública usada para assinar credenciais (`assertionMethod`). Guarde a chave privada em HSM ou cofre de segredos.
+
+## Passo 2 — Subir o Inji Certify
+
+O Certify é distribuído como contêiner. Um `docker-compose` de referência está no repositório upstream:
+
+```bash
+git clone https://github.com/injibr/inji-certify
+cd inji-certify
+# ajuste as configurações (ver inji-config) e suba os serviços
+docker compose up -d
+```
+
+A configuração do serviço (tipos de credencial, templates, chaves, URL do Authorization Server) fica externalizada no [inji-config](https://github.com/injibr/inji-config).
+
+## Passo 3 — Definir o tipo de credencial
+
+Cada tipo de credencial exige:
+
+- um **template** (Velocity) que mapeia os campos da sua base para o JSON-LD da credencial;
+- o **contexto JSON-LD** publicado em URL estável;
+- a entrada correspondente no **well-known** do emissor (`/.well-known/openid-credential-issuer`), que a carteira usa para descobrir o que você emite.
+
+## Passo 4 — Conectar sua base de dados
+
+Implemente ou configure um *data provider plugin*. Opções upstream: plugin CSV (testes), plugin PostgreSQL, integração MOSIP IDA, ou um plugin Java próprio implementando a interface `DataProviderPlugin`.
+
+## Passo 5 — Testar a emissão
+
+1. Cadastre seu emissor no mimoto do ambiente de teste (para o app listá-lo).
+2. Na carteira, escolha o emissor, autentique-se com sua conta gov.br e baixe a credencial.
+3. Verifique a credencial emitida no [Inji Verify](/cookbooks/onboarding-verificador.qmd).
+
+## Checklist de produção
+
+- [ ] `did:web` publicado e resolvendo em HTTPS no domínio institucional
+- [ ] Chave privada em HSM/cofre; rotação de chaves planejada
+- [ ] Assinatura ancorada na ICP-Brasil *(mecanismo em definição — acompanhe o [Roadmap](/roadmap.qmd))*
+- [ ] Contexto JSON-LD e did.json em URLs estáveis e versionadas
+- [ ] Mecanismo de status/revogação configurado
+- [ ] Nível gov.br mínimo definido por tipo de credencial *(mapeamento em definição)*
+- [ ] Logs sem atributos pessoais além do necessário ([Perfil de Emissão](/especificacoes/perfil-emissao.qmd))
+- [ ] Emissão testada de ponta a ponta (carteira → verificação)
+- [ ] Credenciamento junto à governança brasileira *(processo em definição)*

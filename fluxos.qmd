@@ -1,0 +1,5 @@
+---
+title: "Fluxos em detalhe"
+---
+
+{{< include /_partials/fluxos.qmd >}}

@@ -1,0 +1,29 @@
+::: {.callout-warning}
+## Rascunho — não normativo
+:::
+
+Perfila a apresentação e verificação de credenciais. Contexto explicativo: [Fluxos — apresentação](/fluxos.qmd#apresentacao-online).
+
+## Apresentação online — OpenID4VP
+
+- **VERIF-01** — Verificadores **DEVEM** usar OpenID4VP na versão suportada pelo stack implantado *(draft exato: a confirmar)*.
+- **VERIF-02** — A requisição de apresentação **DEVE** especificar os atributos mínimos necessários (minimização de dados).
+- **VERIF-03** — A carteira **DEVE** exibir à pessoa quem pede, o que pede e para quê, antes do consentimento.
+
+## Verificação offline — QR embarcado
+
+- **VERIF-04** — Credenciais com QR embarcado **DEVEM** usar o formato PixelPass (CBOR + compressão).
+- **VERIF-05** — O verificador offline **DEVE** validar a assinatura com material criptográfico previamente sincronizado e **DEVE** sinalizar quando não puder checar status de revogação.
+
+## Apresentação presencial — BLE
+
+- **VERIF-06** — O compartilhamento por Bluetooth Low Energy segue a implementação Tuvali do Inji *(especificação openid4vp-over-ble: a confirmar)*.
+
+## Validações obrigatórias
+
+- **VERIF-07** — Uma verificação **DEVE** checar, no mínimo: prova criptográfica (assinatura da credencial e da apresentação), holder binding, validade temporal, status de revogação (quando online) e autorização do emissor no registro de confiança *(quando o registro brasileiro estiver operacional)*.
+
+## Privacidade
+
+- **VERIF-08** — O verificador **NÃO DEVE** reter a apresentação além da finalidade declarada.
+- **VERIF-09** — Consultas de status **NÃO DEVEM** permitir que o emissor rastreie onde a credencial foi usada (uso de status lists agregadas).

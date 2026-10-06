@@ -1,0 +1,28 @@
+::: {.callout-warning}
+## Rascunho — não normativo
+:::
+
+Perfila o uso do **OpenID4VCI** na emissão de credenciais. Contexto explicativo: [Fluxos — emissão](/fluxos.qmd#emissao).
+
+## Protocolo
+
+- **EMIT-01** — Emissores **DEVEM** implementar OpenID4VCI na versão suportada pelo Inji Certify implantado *(draft exato: a confirmar)*.
+- **EMIT-02** — O fluxo suportado é o **Authorization Code Flow**, com autenticação da pessoa via Acesso gov.br.
+- **EMIT-03** — O emissor **DEVE** publicar metadados em `/.well-known/openid-credential-issuer`.
+
+## Vinculação criptográfica (holder binding)
+
+- **EMIT-04** — Credenciais **DEVEM** ser vinculadas a uma chave da carteira apresentada no momento da emissão (*proof of possession*, tipo `jwt`).
+- **EMIT-05** — O identificador do sujeito (`credentialSubject.id`) **DEVE** ser o **`did:jwk`** derivado dessa chave.
+- **EMIT-06** — A chave da carteira **DEVE** ser protegida por hardware do dispositivo quando disponível.
+
+## Autenticação da pessoa portadora
+
+- **EMIT-07** — A autenticação **DEVE** ser feita pelo **Acesso gov.br** (OpenID Connect); forma de integração ao Certify (direta ou via adaptador): *a confirmar*.
+- **EMIT-08** — Nível de confiabilidade gov.br mínimo (bronze/prata/ouro) por tipo de credencial: *em definição*.
+
+## Requisitos operacionais
+
+- **EMIT-09** — TLS 1.2+ é obrigatório em todos os endpoints.
+- **EMIT-10** — Tokens de acesso **DEVEM** ser de curta duração; `c_nonce` para prova de posse.
+- **EMIT-11** — O emissor **NÃO DEVE** registrar em log atributos pessoais além do necessário para auditoria (LGPD, princípio da necessidade — ver [Privacidade e LGPD](/privacidade-lgpd.qmd)).

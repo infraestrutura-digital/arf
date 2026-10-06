@@ -1,0 +1,29 @@
+::: {.callout-warning}
+## Rascunho
+Datas e prioridades dependem da governança do PodeCrer; esta página registra o estado e as lacunas conhecidas. É o **índice canônico** de tudo o que está marcado *em definição* ou *a confirmar* nesta documentação.
+:::
+
+## Estágio atual
+
+O PodeCrer está em fase de **prova de conceito**: forks dos componentes Inji na organização [injibr](https://github.com/injibr) (inji-certify, inji-verify, mimoto, inji-config), documentação de arquitetura em elaboração (este site) e ambientes brasileiros ainda não publicados.
+
+## Lacunas conhecidas
+
+| Área | Lacuna | Onde é discutida | Estado |
+|---|---|---|---|
+| Governança | Modelo de credenciamento de emissores/verificadores | [Confiança e governança](/confianca-e-governanca.qmd) | Em definição |
+| Confiança | Registro/lista de confiança brasileiro (LOTE e alternativas) | [Confiança e governança](/confianca-e-governanca.qmd) · [Perfil](/especificacoes/perfil-confianca.qmd) | Em avaliação |
+| Assinatura | Mecanismo de ancoragem na ICP-Brasil (assinatura direta vs. chave atestada) | [Decisões de arquitetura](/stack-tecnologico.qmd#assinatura-e-icp-brasil) | Em definição |
+| Identidade | Forma de integração do Acesso gov.br ao fluxo OpenID4VCI (direta ou adaptador) | [Guia gov.br](/cookbooks/integracao-govbr.qmd) | Em definição |
+| Identidade | Nível gov.br mínimo por tipo de credencial | [Perfil de Emissão](/especificacoes/perfil-emissao.qmd) | Em definição |
+| Status | Mecanismo e versão da status list | [Perfil de Credencial](/especificacoes/perfil-vc.qmd) | A confirmar |
+| Especificações | Fixar versões normativas dos perfis (drafts OpenID4VCI/VP etc.) | [Especificações](/especificacoes/index.qmd) | Rascunhos publicados |
+| Privacidade | Papéis LGPD por participante e RIPD da infraestrutura | [Privacidade e LGPD](/privacidade-lgpd.qmd) | Em definição |
+| Carteira | Fork, marca, backup e publicação da carteira brasileira | [Guia da carteira](/cookbooks/carteira.qmd) | Em definição |
+| Ambientes | Homologação e produção (domínios, endpoints, credenciamento) | [Guias práticos](/cookbooks/index.qmd) | Não publicados |
+| Segurança | Modelo de ameaças completo e revisado | [Modelo de ameaças](/modelo-de-ameacas.qmd) | Esboço |
+| Interoperabilidade | SD-JWT VC / mDoc para cenários internacionais | [Perfil de Credencial](/especificacoes/perfil-vc.qmd) | Acompanha upstream |
+
+## Acompanhamento
+
+O planejamento detalhado é acompanhado via issues e projects na organização [injibr](https://github.com/injibr).

@@ -1,0 +1,28 @@
+Os guias práticos são passo a passo, orientados a tarefa, para integrar-se ao PodeCrer. Cada um cobre um papel do ecossistema; todos começam com pré-requisitos e terminam com um checklist. Antes de seguir um guia, vale ter lido [Papéis e arquitetura](/papeis-e-arquitetura.qmd) e [Fluxos em detalhe](/fluxos.qmd).
+
+| Guia | Para quem |
+|---|---|
+| [Tornar-se emissor](/cookbooks/onboarding-emissor.qmd) | Órgãos e entidades que querem emitir credenciais com o Inji Certify |
+| [Tornar-se verificador](/cookbooks/onboarding-verificador.qmd) | Quem precisa verificar credenciais com o Inji Verify |
+| [Integração com o Acesso gov.br](/cookbooks/integracao-govbr.qmd) | Emissores que precisam autenticar portadores na emissão |
+| [Carteira](/cookbooks/carteira.qmd) | Como obter e usar a carteira; build do app |
+
+## Pré-requisitos comuns
+
+Independentemente do papel, você vai precisar de:
+
+- **Docker e Docker Compose** para subir os serviços de referência;
+- um **domínio institucional próprio** (órgãos federais: `.gov.br`) com HTTPS, onde publicar identificadores e contextos;
+- familiaridade com **OAuth 2.0/OpenID Connect** — os protocolos de emissão e apresentação são extensões dessa família.
+
+## Ferramentas de teste
+
+- Ambiente colaborativo do Inji upstream: [collab.mosip.net](https://docs.inji.io) para experimentação com Certify, Verify e a carteira.
+- Ambiente de homologação brasileiro: *em definição*.
+
+## De homologação a produção
+
+::: {.callout-warning}
+## Em definição
+Os guias refletem o stack Inji genérico. Endpoints, credenciais de acesso, o processo de credenciamento junto à governança e o caminho formal homologação → produção dos ambientes brasileiros serão adicionados quando publicados — acompanhe pelo [Roadmap](/roadmap.qmd).
+:::

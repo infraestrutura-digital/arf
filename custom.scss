@@ -1,0 +1,173 @@
+/*-- scss:defaults --*/
+
+// Paleto PodeCrer (inspirada no gov.br)
+$ipd-blue-dark:  #0B2B66;
+$ipd-blue:       #1351B4;
+$ipd-teal:       #0E7A5F;
+$ipd-green:      #168821;
+$ipd-yellow:     #FFCD07;
+
+$primary:        $ipd-blue;
+$link-color:     $ipd-blue;
+
+$body-color:     #3d4144;
+$headings-color: #2c2f31;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif;
+
+// Navbar branca, como o masthead do swiyu
+$navbar-bg: #ffffff;
+$navbar-fg: #494e52;
+
+/*-- scss:rules --*/
+
+// Gradiente de marca (usado em hero, cards e placeholders)
+@mixin ipd-gradient {
+  background: linear-gradient(135deg,
+    #{$ipd-blue-dark} 0%,
+    #{$ipd-blue} 35%,
+    #{$ipd-teal} 70%,
+    #{$ipd-green} 100%);
+}
+
+.navbar {
+  border-bottom: 1px solid #e9ecef;
+  .navbar-brand { font-weight: 700; color: #2c2f31; }
+  .nav-link { font-size: 0.95rem; }
+}
+
+// ---------- Hero da página inicial ----------
+.hero-banner {
+  @include ipd-gradient;
+  color: #fff;
+  border-radius: 8px;
+  padding: 4rem 3rem;
+  margin-bottom: 2.5rem;
+
+  h1 {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    border: none;
+    margin-top: 0;
+  }
+  p { font-size: 1.15rem; max-width: 46rem; opacity: 0.95; }
+  a { color: #fff; text-decoration: underline; }
+}
+
+// ---------- Cards da home (estilo feature row do swiyu) ----------
+.home-cards { margin-top: 1rem; }
+
+.home-card {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+
+  p { padding: 0 1rem; }
+
+  .btn-saiba-mais {
+    display: inline-block;
+    margin: 0 1rem 1rem 1rem;
+    padding: 0.4rem 1rem;
+    background-color: $ipd-blue;
+    color: #fff !important;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    align-self: flex-start;
+    &:hover { background-color: $ipd-blue-dark; }
+  }
+}
+
+// Slot de imagem do card: gradiente já aplicado via CSS;
+// o texto dentro é o prompt para gerar a imagem definitiva.
+.card-img, .page-banner {
+  @include ipd-gradient;
+  color: rgba(255, 255, 255, 0.92);
+  padding: 1rem 1.25rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+
+  p { padding: 0; margin: 0.25rem 0; }
+  code { color: #fff; background: rgba(255,255,255,0.15); }
+  strong { color: #fff; }
+}
+
+.card-img { min-height: 170px; }
+
+// Card com ícone Lucide (SVG inline) sobre o gradiente — estilo swiyu
+.card-icon {
+  @include ipd-gradient;
+  min-height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+
+  svg.lucide {
+    width: 52px;
+    height: 52px;
+    color: #fff;
+    stroke-width: 1.5;
+  }
+
+  .card-label {
+    color: #fff;
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+  }
+
+  p { padding: 0; margin: 0; display: contents; }
+}
+
+// Card com imagem real gerada (substitui o placeholder de prompt)
+.card-photo {
+  margin: 0;
+  p { padding: 0; margin: 0; }
+  img { width: 100%; display: block; margin: 0; }
+}
+
+.page-banner {
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+// Placeholder de diagrama (fundo claro, borda tracejada)
+.diagram-placeholder {
+  border: 2px dashed #b8c4d0;
+  border-radius: 8px;
+  background: #f6f8fa;
+  padding: 1rem 1.25rem;
+  font-size: 0.8rem;
+  color: #4a5560;
+  margin: 1.5rem 0;
+
+  code { background: #eceff2; }
+}
+
+// Tabelas mais leves, como no swiyu
+table { font-size: 0.95em; }
+
+.callout { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+
+// Logo (SVG) na navbar — sem texto, altura maior
+.navbar {
+  min-height: 72px;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  .navbar-brand { padding-top: 0; padding-bottom: 0; display: flex; align-items: center; }
+  .navbar-brand-logo, .navbar-logo {
+    max-height: 56px;
+    margin: 0;
+    img { max-height: 56px; height: 56px; width: auto; }
+  }
+}
+
+// Logo (SVG) no hero da home
+.hero-banner .hero-logo img { max-height: 120px; width: auto; margin-bottom: 1.25rem; }

@@ -1,0 +1,5 @@
+---
+title: "Papéis e arquitetura"
+---
+
+{{< include /_partials/papeis-e-arquitetura.qmd >}}

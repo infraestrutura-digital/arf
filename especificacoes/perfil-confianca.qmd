@@ -1,0 +1,5 @@
+---
+title: "Perfil: Confiança"
+---
+
+{{< include /_partials/perfil-confianca.qmd >}}

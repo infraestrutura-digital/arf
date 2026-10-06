@@ -1,0 +1,5 @@
+---
+title: "Referências"
+---
+
+{{< include /_partials/referencias.qmd >}}

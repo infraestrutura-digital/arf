@@ -1,0 +1,61 @@
+O PodeCrer segue o paradigma de **identidade descentralizada**: a pessoa portadora é dona dos seus dados e os carrega em uma carteira digital no próprio dispositivo. Emissores entregam credenciais verificáveis diretamente à carteira; verificadores checam a autenticidade criptograficamente, sem precisar consultar o emissor a cada verificação. Este capítulo apresenta os papéis e componentes por trás das jornadas descritas em [Funcionalidades e jornadas](/funcionalidades-e-jornadas.qmd); o detalhe protocolo a protocolo está em [Fluxos em detalhe](/fluxos.qmd).
+
+![O triângulo da confiança: o emissor entrega a credencial à pessoa portadora (OpenID4VCI), que a apresenta ao verificador (OpenID4VP/QR); a confiança do verificador no emissor é ancorada em DID, status e no registro de confiança (em definição).](assets/images/diagrama_ecossistema.png){fig-alt="Diagrama com três caixas em triângulo — Portador (Inji Wallet), Emissor (Inji Certify) e Verificador (Inji Verify) — ligadas por setas de emissão, apresentação e confiança, com um escudo ao centro representando o registro de confiança"}
+
+## Papéis
+
+### Portador e Carteiras {#portador-e-carteiras}
+
+A pessoa **portadora** (holder) recebe, guarda e apresenta credenciais por meio de uma **carteira digital** (wallet). A carteira de referência do ecossistema é a **Inji Wallet**, aplicativo móvel open source do stack Inji, acessado no Brasil por meio da customização mantida em [injibr](https://github.com/injibr). A carteira:
+
+- baixa credenciais de emissores via OpenID4VCI;
+- armazena as credenciais no dispositivo, protegidas por autenticação local;
+- apresenta credenciais a verificadores online (OpenID4VP) ou presencialmente (QR code e compartilhamento offline via Bluetooth Low Energy).
+
+O backend da carteira é o **mimoto** (BFF — *backend for frontend*), que intermedeia a comunicação entre o app e os serviços de emissão.
+
+### Emissor
+
+O **emissor** (issuer) é a entidade — órgão público ou credenciada — que atesta fatos sobre a pessoa portadora na forma de credenciais verificáveis: identidade civil, habilitação, diploma, matrícula, benefício social etc. No stack Inji, o componente de emissão é o **Inji Certify**, que expõe o protocolo OpenID4VCI e se conecta às bases de dados do emissor por meio de plugins.
+
+### Verificador
+
+O **verificador** (verifier / relying party) é quem precisa confirmar um fato sobre a pessoa: um banco validando identidade, uma escola conferindo um diploma, um agente de fiscalização checando uma habilitação. O componente de referência é o **Inji Verify**, que valida assinaturas, status de revogação e a conformidade da credencial — inclusive offline, a partir do QR code embarcado na credencial.
+
+### Provedor de autenticação
+
+Durante a emissão, a pessoa precisa provar quem é para o emissor. No perfil brasileiro, essa autenticação é feita pelo **Acesso gov.br** (login único do Governo Federal), via OpenID Connect, com os níveis de confiabilidade bronze/prata/ouro. O eSignet, usado no stack Inji upstream, não faz parte do perfil brasileiro.
+
+### Registros e âncoras de confiança
+
+::: {.callout-note}
+## Em definição
+O modelo suíço mantém dois registros centrais: um **Base Registry** (identificadores e material criptográfico de emissores/verificadores) e um **Trust Registry** (quem está autorizado a emitir ou verificar o quê). O equivalente brasileiro — incluindo o papel do gov.br, de registros setoriais e da cadeia ICP-Brasil — ainda está em definição. Os modelos em avaliação estão em [Confiança e governança](/confianca-e-governanca.qmd).
+:::
+
+## Componentes e Governança
+
+| Componente | Papel | Mantenedor |
+|---|---|---|
+| Inji Wallet | Carteira móvel da pessoa portadora | injibr (fork do MOSIP) |
+| mimoto | Backend da carteira (BFF) | [injibr/mimoto](https://github.com/injibr/mimoto) |
+| Inji Certify | Serviço de emissão (OpenID4VCI) | [injibr/inji-certify](https://github.com/injibr/inji-certify) |
+| Inji Verify | Serviço/portal de verificação | [injibr/inji-verify](https://github.com/injibr/inji-verify) |
+| Acesso gov.br | Autenticação da pessoa na emissão | Governo Federal (SGD) |
+| inji-config | Configuração centralizada dos serviços | [injibr/inji-config](https://github.com/injibr/inji-config) |
+
+A governança do ecossistema — quem opera cada componente em produção, critérios de credenciamento de emissores e verificadores, e o arcabouço legal aplicável (LGPD, gov.br, ICP-Brasil) — está *em definição*; ver [Confiança e governança](/confianca-e-governanca.qmd).
+
+## Ciclo de vida da credencial
+
+1. **Emissão** — a pessoa autentica-se no emissor (via Acesso gov.br), e o Inji Certify emite a credencial assinada, entregue à carteira por OpenID4VCI.
+2. **Guarda** — a credencial fica no dispositivo da pessoa, sob seu controle exclusivo.
+3. **Apresentação** — a pessoa decide quando e para quem apresentar a credencial, por fluxo online ou por QR code/BLE presencial.
+4. **Verificação** — o verificador valida assinatura, integridade, validade e status de revogação.
+5. **Revogação/expiração** — o emissor pode revogar a credencial; verificadores detectam a revogação pelo mecanismo de status. *(Mecanismo de status no perfil brasileiro: a confirmar — ver [Fluxos em detalhe](/fluxos.qmd#status-e-revogacao).)*
+
+Cada etapa tem seu diagrama de sequência em [Fluxos em detalhe](/fluxos.qmd).
+
+## Confiança no ecossistema
+
+Para que uma credencial tenha valor, o verificador precisa confiar em três coisas: que a **assinatura** é válida (criptografia), que o **emissor** é quem diz ser (resolução do identificador do emissor) e que o emissor é **autorizado** a emitir aquele tipo de credencial (registro de confiança / governança). Os dois primeiros pontos são resolvidos pelo stack técnico — ver [Decisões de arquitetura técnica](/stack-tecnologico.qmd) e as [Especificações](/especificacoes/index.qmd). O terceiro é o tema de [Confiança e governança](/confianca-e-governanca.qmd).

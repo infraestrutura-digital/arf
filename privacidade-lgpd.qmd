@@ -1,0 +1,5 @@
+---
+title: "Privacidade e LGPD"
+---
+
+{{< include /_partials/privacidade-lgpd.qmd >}}

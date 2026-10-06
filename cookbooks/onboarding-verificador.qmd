@@ -1,0 +1,5 @@
+---
+title: "Guia: Tornar-se verificador"
+---
+
+{{< include /_partials/cookbook-onboarding-verificador.qmd >}}

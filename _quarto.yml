@@ -1,0 +1,100 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "**/*.qmd"
+    - "!arf-pdf.qmd"
+
+lang: pt-BR
+
+website:
+  title: "PodeCrer"
+  description: "Documentação técnica do PodeCrer — a Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil"
+  site-url: https://injibr.github.io/arf
+  repo-url: https://github.com/injibr/arf
+  repo-actions: [edit, issue]
+  page-navigation: true
+  navbar:
+    background: light
+    logo: assets/images/podecrer__logo.svg
+    logo-alt: "PodeCrer"
+    title: false
+    search: true
+    left:
+      - text: "Entenda"
+        href: introducao.qmd
+      - text: "Integre"
+        href: cookbooks/index.qmd
+      - text: "Especificações"
+        href: especificacoes/index.qmd
+    right:
+      - text: "Sobre"
+        href: sobre.qmd
+  sidebar:
+    - id: entenda
+      title: "Entenda"
+      style: docked
+      contents:
+        - section: "Entenda"
+          contents:
+            - text: "1. Introdução"
+              href: introducao.qmd
+            - text: "2. Funcionalidades e jornadas"
+              href: funcionalidades-e-jornadas.qmd
+            - text: "3. Papéis e arquitetura"
+              href: papeis-e-arquitetura.qmd
+            - text: "4. Decisões de arquitetura técnica"
+              href: stack-tecnologico.qmd
+            - text: "5. Fluxos em detalhe"
+              href: fluxos.qmd
+            - text: "6. Confiança e governança"
+              href: confianca-e-governanca.qmd
+            - text: "7. Privacidade e LGPD"
+              href: privacidade-lgpd.qmd
+            - text: "8. Modelo de ameaças"
+              href: modelo-de-ameacas.qmd
+            - text: "9. Componentes open source"
+              href: componentes-open-source.qmd
+        - section: "Anexos"
+          contents:
+            - roadmap.qmd
+            - glossario.qmd
+            - referencias.qmd
+        - sobre.qmd
+    - id: integre
+      title: "Integre"
+      style: docked
+      contents:
+        - cookbooks/index.qmd
+        - cookbooks/onboarding-emissor.qmd
+        - cookbooks/onboarding-verificador.qmd
+        - cookbooks/integracao-govbr.qmd
+        - cookbooks/carteira.qmd
+    - id: especificacoes
+      title: "Especificações"
+      style: docked
+      contents:
+        - especificacoes/index.qmd
+        - especificacoes/perfil-identificadores.qmd
+        - especificacoes/perfil-vc.qmd
+        - especificacoes/perfil-emissao.qmd
+        - especificacoes/perfil-verificacao.qmd
+        - especificacoes/perfil-confianca.qmd
+  page-footer:
+    left: "PodeCrer — documentação técnica"
+    right:
+      - text: "Referências: ARF (UE) · swiyu (Suíça) · Inji (MOSIP)"
+        href: referencias.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, custom.scss]
+    include-after-body:
+      text: |
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>if (window.lucide) lucide.createIcons();</script>
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    link-external-newwindow: true

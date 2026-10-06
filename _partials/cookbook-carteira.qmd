@@ -1,0 +1,55 @@
+:::: {.content-visible when-format="html"}
+::: {.page-banner}
+`banner_cookbook_carteira.png` · 10:3
+
+**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de um smartphone com um cartão de identidade saindo da tela, traço uniforme e cantos arredondados, centralizado; abaixo, o texto "carteira" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
+:::
+::::
+
+Como obter, configurar e fazer build da carteira do ecossistema (Inji Wallet).
+
+::: {.callout-warning}
+## Rascunho
+A carteira brasileira (nome, lojas de aplicativos, marca) está em definição. Este guia cobre o build a partir do código upstream.
+:::
+
+## Pré-requisitos (para desenvolvedores)
+
+- Node.js e ambiente React Native configurado (Android SDK e/ou Xcode).
+- Um backend **mimoto** acessível (próprio ou de ambiente de teste).
+- Leitura prévia: [Papéis e arquitetura — Portador e Carteiras](/papeis-e-arquitetura.qmd#portador-e-carteiras).
+
+## Para pessoas usuárias
+
+A carteira será distribuída nas lojas de aplicativos quando o ambiente brasileiro entrar em operação. Enquanto isso, é possível experimentar o app de referência do Inji no ambiente colaborativo do MOSIP.
+
+## Para desenvolvedores — build do app
+
+A Inji Wallet é um app React Native (Android e iOS):
+
+```bash
+git clone https://github.com/mosip/inji-wallet
+cd inji-wallet
+# siga o README para pré-requisitos (Node, Android SDK / Xcode)
+```
+
+Pontos de configuração relevantes:
+
+- **mimoto** — o app aponta para um backend mimoto; para o ambiente brasileiro, use a instância do [injibr/mimoto](https://github.com/injibr/mimoto) *(endpoint em definição)*;
+- **Emissores exibidos** — a lista de emissores vem da configuração do mimoto (inji-config);
+- **Tradução** — strings em pt-BR mantidas no fork brasileiro.
+
+## Funcionalidades principais
+
+- Download de credenciais via OpenID4VCI
+- Autenticação local (PIN/biometria) para proteger as credenciais
+- Apresentação online (OpenID4VP) e presencial (QR / BLE via Tuvali)
+- Backup *(disponibilidade no perfil brasileiro a confirmar)*
+
+## Checklist (build de desenvolvimento)
+
+- [ ] App compila e roda em Android e/ou iOS
+- [ ] App aponta para o mimoto correto *(endpoint brasileiro em definição)*
+- [ ] Lista de emissores carregada da configuração (inji-config)
+- [ ] Download e apresentação de credencial testados de ponta a ponta
+- [ ] Strings pt-BR presentes *(fork brasileiro a publicar)*

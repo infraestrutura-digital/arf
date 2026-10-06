@@ -1,0 +1,51 @@
+::: {.callout-warning}
+## Rascunho — não normativo
+:::
+
+Define o formato das credenciais emitidas no PodeCrer. Contexto explicativo: [Decisões de arquitetura — W3C VC](/stack-tecnologico.qmd#formato-de-credencial-w3c-vc).
+
+## Modelo de dados
+
+- **VC-01** — Credenciais **DEVEM** seguir o [W3C VC Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/) em serialização JSON-LD (`@context` incluindo `https://www.w3.org/ns/credentials/v2`).
+- **VC-02** — Cada tipo de credencial **DEVE** ter contexto JSON-LD e `credentialSchema` publicados em URLs estáveis e versionadas.
+- **VC-03** — O sujeito (`credentialSubject.id`) **DEVE** ser o `did:jwk` da chave gerada no dispositivo da pessoa portadora (holder binding — ver [Perfil de Emissão](/especificacoes/perfil-emissao.qmd)).
+- **VC-04** — Atributos **DEVEM** usar nomes em inglês no vocabulário técnico e rótulos pt-BR na camada de apresentação.
+
+Exemplo abreviado (credencial de maioridade do ECA Digital):
+
+```json
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
+  "type": ["VerifiableCredential", "ECACredential"],
+  "issuer": "did:web:mgi.gov.br:eca-digital:prod:mgi",
+  "validFrom": "2026-06-12T17:19:15Z",
+  "validUntil": "2026-09-10T17:19:15Z",
+  "credentialSubject": {
+    "id": "did:jwk:eyJrdHkiOiJPS1AiLCJjcnYi...",
+    "age_over_18": true
+  },
+  "credentialSchema": { "id": ".../ECACredential.json" },
+  "proof": { "type": "Ed25519Signature2020", "...": "..." }
+}
+```
+
+Note a minimização de dados: a credencial atesta `age_over_18` sem revelar a data de nascimento.
+
+## Assinatura
+
+- **VC-05** — A assinatura das credenciais **DEVE** ser ancorada na **ICP-Brasil** — o mecanismo (assinatura direta com certificado ICP-Brasil vs. chave Ed25519 atestada por certificado ICP-Brasil) está *em definição*; ver [Assinatura e ICP-Brasil](/stack-tecnologico.qmd#assinatura-e-icp-brasil).
+- **VC-06** — Enquanto a decisão não é fixada, o comportamento de referência é o do Inji upstream: Data Integrity proof `Ed25519Signature2020`.
+- **VC-07** — A chave de assinatura **DEVE** estar publicada no documento DID do emissor (`assertionMethod`).
+
+## Status e revogação
+
+- **VC-08** — Credenciais revogáveis **DEVEM** incluir entrada `credentialStatus` apontando para uma status list do W3C *(mecanismo e versão: a confirmar)*.
+- **VC-09** — A status list **DEVE** ser servida pelo emissor em URL estável, sem exigir autenticação do verificador (privacidade: a lista não revela quem consulta o quê — ver [Fluxos — status e revogação](/fluxos.qmd#status-e-revogacao)).
+
+## Apresentação visual
+
+- **VC-10** — Credenciais **PODEM** incluir metadados de renderização para exibição consistente nas carteiras *(mecanismo — renderMethod, OCA ou template do mimoto: em avaliação)*.
+
+## Formatos adicionais (futuro)
+
+Suporte a **SD-JWT VC** (divulgação seletiva) e **mDoc/mDL** (ISO 18013-5) acompanha o roadmap do Inji upstream e a necessidade de interoperabilidade internacional (EUDI Wallet). Estado: *em avaliação*.

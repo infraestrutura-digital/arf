@@ -1,0 +1,125 @@
+---
+title: "PodeCrer"
+toc: false
+page-layout: full
+sidebar: false
+---
+
+::: {.hero-banner}
+![](assets/images/podecrer__logo.svg){.hero-logo fig-alt="PodeCrer" width="420"}
+
+Documentação técnica, guias e especificações do **PodeCrer** — a Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil, uma solução tecnológica para compartilhamento consentido de dados, construída sobre o stack open source [Inji](https://inji.io) com customizações da organização [injibr](https://github.com/injibr).
+:::
+
+Este site é o **Architecture Reference Framework (ARF)** do PodeCrer. O conteúdo reflete o estado atual da implementação e está sujeito a mudanças; seções marcadas como *em definição* dependem de decisões de governança ainda não tomadas. Leia [Sobre esta documentação](sobre.qmd) para saber como o material está organizado e por onde começar conforme o seu perfil:
+
+- **Gestores públicos** — comecem pela [Introdução](introducao.qmd) e pelas [Funcionalidades e jornadas](funcionalidades-e-jornadas.qmd).
+- **Integradores técnicos** — sigam dos [Fluxos em detalhe](fluxos.qmd) para os [Guias práticos](cookbooks/index.qmd) e as [Especificações](especificacoes/index.qmd).
+- **Avaliadores de segurança e privacidade** — vejam [Confiança e governança](confianca-e-governanca.qmd), [Privacidade e LGPD](privacidade-lgpd.qmd) e o [Modelo de ameaças](modelo-de-ameacas.qmd).
+
+:::: {.grid .home-cards}
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="lightbulb" aria-hidden="true"></i>
+[entenda]{.card-label}
+:::
+
+**Introdução** — o problema, o que é uma credencial verificável, os princípios e o modelo duplo-cego.
+
+[Saiba mais](introducao.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="anchor" aria-hidden="true"></i>
+[arquitetura]{.card-label}
+:::
+
+**Papéis e arquitetura** — portador, emissor, verificador, componentes, ciclo de vida das credenciais.
+
+[Saiba mais](papeis-e-arquitetura.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="workflow" aria-hidden="true"></i>
+[fluxos]{.card-label}
+:::
+
+**Fluxos em detalhe** — diagramas de sequência de emissão, apresentação online, QR offline e BLE.
+
+[Saiba mais](fluxos.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="book-open" aria-hidden="true"></i>
+[integre]{.card-label}
+:::
+
+**Guias práticos** — passo a passo de onboarding para emissores, verificadores e a carteira.
+
+[Saiba mais](cookbooks/index.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="file-badge" aria-hidden="true"></i>
+[especificações]{.card-label}
+:::
+
+**Especificações** — o Perfil Brasileiro: identificadores, credenciais, emissão, verificação e confiança.
+
+[Saiba mais](especificacoes/index.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="shield-check" aria-hidden="true"></i>
+[confiança]{.card-label}
+:::
+
+**Confiança e governança** — como o ecossistema estabelece quem pode emitir e verificar o quê.
+
+[Saiba mais](confianca-e-governanca.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="lock" aria-hidden="true"></i>
+[privacidade]{.card-label}
+:::
+
+**Privacidade e LGPD** — minimização, consentimento e o duplo-cego como medida técnica.
+
+[Saiba mais](privacidade-lgpd.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="shield-alert" aria-hidden="true"></i>
+[modelo de ameaças]{.card-label}
+:::
+
+**Modelo de ameaças** — escopo, método STRIDE e categorias de ameaça priorizadas.
+
+[Saiba mais](modelo-de-ameacas.qmd){.btn-saiba-mais}
+:::
+
+::: {.g-col-12 .g-col-md-6 .g-col-lg-4 .home-card}
+::: {.card-icon}
+<i data-lucide="milestone" aria-hidden="true"></i>
+[roadmap]{.card-label}
+:::
+
+**Roadmap** — estágio atual, lacunas conhecidas e próximos passos.
+
+[Saiba mais](roadmap.qmd){.btn-saiba-mais}
+:::
+
+::::
+
+## Inspiração
+
+Este documento se inspira no [Architecture and Reference Framework](https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/) europeu e na [documentação técnica do swiyu](https://swiyu-admin-ch.github.io/) (e-ID suíça), cujo formato enxuto e orientado a desenvolvedores serviu de modelo para este site.

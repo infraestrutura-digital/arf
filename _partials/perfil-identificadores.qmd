@@ -1,0 +1,30 @@
+::: {.callout-warning}
+## Rascunho — não normativo
+:::
+
+Define como emissores e verificadores publicam e mantêm seus identificadores. Contexto explicativo: [Decisões de arquitetura — did:web](/stack-tecnologico.qmd#identificadores-did-web).
+
+## Método DID
+
+- **IDENT-01** — Emissores **DEVEM** usar o método `did:web` ancorado em domínio institucional próprio.
+- **IDENT-02** — Órgãos públicos federais **DEVEM** usar domínios `.gov.br`.
+- **IDENT-03** — O documento DID **DEVE** ser servido via HTTPS em `/.well-known/did.json` (DID de domínio raiz) ou no caminho correspondente ao DID.
+- **IDENT-04** — Emissores **PODEM** usar segmentos de caminho para distinguir serviço, ambiente e unidade emissora — por exemplo, `did:web:mgi.gov.br:eca-digital:prod:mgi` (ECA Digital). Convenção de nomenclatura: *em consolidação*.
+- **IDENT-05** — Pessoas portadoras **DEVEM** ser identificadas por `did:jwk` (derivado da chave do dispositivo), não por `did:web` — ver [Perfil de Credencial](/especificacoes/perfil-vc.qmd).
+
+## Documento DID
+
+- **IDENT-06** — O documento DID **DEVE** conter ao menos uma chave em `assertionMethod` para assinatura de credenciais.
+- **IDENT-07** — Chaves **DEVEM** usar Ed25519 (`Ed25519VerificationKey2020` / multikey). Outros tipos (por exemplo, RSA de certificados ICP-Brasil): *a definir conforme o mecanismo de ancoragem*.
+- **IDENT-08** — As chaves do emissor **DEVEM** ser ancoradas na **ICP-Brasil** — mecanismo *em definição*, ver [Assinatura e ICP-Brasil](/stack-tecnologico.qmd#assinatura-e-icp-brasil).
+- **IDENT-09** — `service` endpoints: uso restrito, *a definir* (o perfil suíço os proíbe por segurança; avaliação em andamento).
+
+## Rotação e comprometimento de chaves
+
+- **IDENT-10** — Procedimento de rotação: *em definição*. Em avaliação: adoção de `did:webvh` para histórico verificável de chaves, seguindo o precedente suíço.
+- **IDENT-11** — Em caso de comprometimento, o emissor **DEVE** comunicar a governança e revogar credenciais afetadas.
+
+## Questões em aberto
+
+- `did:web` puro não oferece histórico verificável — a confiança repousa em DNS/TLS. Adotar `did:webvh`?
+- Registro central de DIDs de emissores (espelho/observabilidade) sob a governança brasileira?

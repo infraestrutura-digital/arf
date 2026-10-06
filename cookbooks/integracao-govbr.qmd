@@ -1,0 +1,5 @@
+---
+title: "Guia: Integração com o Acesso gov.br"
+---
+
+{{< include /_partials/cookbook-integracao-govbr.qmd >}}

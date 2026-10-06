@@ -1,0 +1,7 @@
+---
+title: "Introdução"
+aliases:
+  - conceitos.html
+---
+
+{{< include /_partials/introducao.qmd >}}

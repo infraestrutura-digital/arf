@@ -1,0 +1,21 @@
+As especificações definem o **Perfil Brasileiro** do PodeCrer: as escolhas normativas — versões de padrões, algoritmos, restrições — que emissores, verificadores e carteiras devem seguir para interoperar. É o equivalente aos *Swiss Profiles* do swiyu e às *Technical Specifications* do ARF europeu.
+
+| Perfil | Prefixo | Escopo |
+|---|---|---|
+| [Identificadores](/especificacoes/perfil-identificadores.qmd) | `IDENT` | did:web: estrutura, publicação, rotação de chaves |
+| [Credencial Verificável](/especificacoes/perfil-vc.qmd) | `VC` | Formato, assinatura, contextos, status |
+| [Emissão](/especificacoes/perfil-emissao.qmd) | `EMIT` | Perfil OpenID4VCI |
+| [Verificação](/especificacoes/perfil-verificacao.qmd) | `VERIF` | Perfil OpenID4VP e verificação offline |
+| [Confiança](/especificacoes/perfil-confianca.qmd) | `CONF` | Registro de confiança e autorização de emissores/verificadores |
+
+::: {.callout-warning}
+## Rascunho
+Estes perfis estão em elaboração. Enquanto versões normativas não são publicadas, o comportamento de referência é o do stack Inji upstream na versão implantada nos ambientes brasileiros.
+:::
+
+## Convenções
+
+- As palavras-chave **DEVE**, **NÃO DEVE**, **PODE** e **RECOMENDADO** seguem a semântica do [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119).
+- Cada requisito tem um identificador estável no formato `PREFIXO-nn` (por exemplo, `IDENT-01`), citável em issues, contratos e avaliações de conformidade. Identificadores não são reutilizados: requisito removido tem o número aposentado.
+- Em caso de conflito entre um capítulo explicativo e um perfil, **o perfil prevalece**.
+- Requisitos marcados *(em definição)* ou *(a confirmar)* sinalizam decisão pendente — consolidadas no [Roadmap](/roadmap.qmd).
