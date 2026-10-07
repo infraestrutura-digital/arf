@@ -12,7 +12,7 @@ format:
 output-file: ar-ipd-credenciais.pdf
 ---
 
-Este documento é a versão consolidada, para leitura e impressão, da Arquitetura de Referência (AR) da Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil (IPD de Credenciais). O conteúdo é gerado da mesma fonte que o site <https://injibr.github.io/arf>; em caso de divergência, o site prevalece por ser atualizado continuamente.
+Este documento é a versão consolidada, para leitura e impressão, da Arquitetura de Referência (AR) da Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil (IPD de Credenciais). O conteúdo é gerado da mesma fonte que o site <https://infraestrutura-digital.github.io/arf>; em caso de divergência, o site prevalece por ser atualizado continuamente.
 
 ::: {.callout-warning}
 ## Estágio: rascunho

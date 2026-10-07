@@ -9,8 +9,8 @@ lang: pt-BR
 website:
   title: "AR · IPD de Credenciais"
   description: "Arquitetura de Referência da Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil (IPD de Credenciais)"
-  site-url: https://injibr.github.io/arf
-  repo-url: https://github.com/injibr/arf
+  site-url: https://infraestrutura-digital.github.io/arf
+  repo-url: https://github.com/infraestrutura-digital/arf
   repo-actions: [edit, issue]
   page-navigation: true
   navbar:

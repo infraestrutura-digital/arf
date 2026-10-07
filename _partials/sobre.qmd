@@ -38,4 +38,4 @@ Em caso de divergência, o site prevalece.
 
 ## Contribuindo
 
-A documentação vive em [github.com/injibr/arf](https://github.com/injibr/arf). Correções e sugestões são bem-vindas via issues e pull requests.
+A documentação vive em [github.com/infraestrutura-digital/arf](https://github.com/infraestrutura-digital/arf). Correções e sugestões são bem-vindas via issues e pull requests.
