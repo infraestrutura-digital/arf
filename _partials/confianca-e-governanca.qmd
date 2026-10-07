@@ -2,7 +2,7 @@ Para que uma credencial tenha valor, o verificador precisa confiar em três cois
 
 ::: {.callout-warning}
 ## Em definição
-Este é o tema menos maduro do PodeCrer: o modelo de governança, o registro de confiança e o processo de credenciamento de participantes ainda não foram decididos. O capítulo apresenta o problema e os modelos em avaliação; os requisitos que independem da decisão estão no [Perfil de Confiança](/especificacoes/perfil-confianca.qmd).
+Este é o tema menos maduro da IPD de Credenciais: o modelo de governança, o registro de confiança e o processo de credenciamento de participantes ainda não foram decididos. O capítulo apresenta o problema e os modelos em avaliação; os requisitos que independem da decisão estão no [Perfil de Confiança](/especificacoes/perfil-confianca.qmd).
 :::
 
 ## O problema
@@ -28,7 +28,7 @@ A verificação vira uma cadeia automatizável: confia na LoTL → resolve a TL 
 
 ### Adaptação brasileira
 
-A estrutura equivalente para o PodeCrer:
+A estrutura equivalente para a IPD de Credenciais:
 
 - A **autoridade de governança** publica a **LOTE brasileira**, assinada (por exemplo, com certificado ICP-Brasil), apontando para listas setoriais.
 - Cada **órgão regulador setorial** mantém sua lista de emissores autorizados por tipo de credencial: MGI (identidade, ECA Digital), MEC (diplomas), Senatran (habilitação), e assim por diante.
@@ -36,19 +36,6 @@ A estrutura equivalente para o PodeCrer:
 
 Isso distribui a governança — cada setor credencia seus emissores no próprio ritmo — sem fragmentar a confiança. A ICP-Brasil já opera estrutura análoga em um nível (AC-Raiz → lista de ACs credenciadas); a LOTE generaliza o padrão para emissores de credenciais verificáveis.
 
-### Ferramental
-
-Não é preciso gerar o XML "na mão". O ecossistema eIDAS mantém software open source reutilizável:
-
-- **[DSS (Digital Signature Service)](https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467109107/Digital+Signature+Service+-+DSS)** — biblioteca Java open source da Comissão Europeia: valida e processa TLs/LoTL conforme ETSI TS 119 612 (TLv6 a partir do DSS 6.2) e assina XAdES, o formato de assinatura exigido para as listas.
-- **TL Manager** — aplicação web open source da Comissão usada pelos operadores nacionais para criar, editar, validar e assinar suas trusted lists.
-
-Um fluxo de manutenção típico para uma lista setorial (por exemplo, a do MGI): manter os emissores em uma base estruturada (ou YAML em repositório Git, com revisão por pull request) → gerar o XML ETSI TS 119 612 → validar contra o schema e as regras da especificação (via DSS) → assinar XAdES com chave em HSM (certificado ICP-Brasil do órgão) → publicar em URL estável com `NextUpdate` definido. O mesmo pipeline serve para a LOTE.
-
-::: {.callout-note}
-## Formato em avaliação
-A ETSI TS 119 612 é XML/XAdES, herdada do mundo eIDAS. Para o PodeCrer também está em avaliação publicar as listas em formato JSON assinado (mais natural ao stack de VCs), mantendo a mesma estrutura de dois níveis. A decisão acompanha o trabalho da ETSI para listas de confiança no ecossistema EUDI.
-:::
 
 ## Governança do ecossistema
 

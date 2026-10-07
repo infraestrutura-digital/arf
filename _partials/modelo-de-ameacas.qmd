@@ -5,7 +5,7 @@ Um modelo de ameaças completo (com árvores de ataque e análise por componente
 
 ## Escopo
 
-O modelo cobre o ecossistema do PodeCrer: carteira e seu backend (mimoto), serviços de emissão (Inji Certify + integração com o Acesso gov.br), serviços de verificação (Inji Verify), configuração (inji-config) e os canais entre eles (OpenID4VCI/VP, QR, BLE).
+O modelo cobre o ecossistema da IPD de Credenciais: carteira e seu backend (mimoto), serviços de emissão (Inji Certify + integração com o Acesso gov.br), serviços de verificação (Inji Verify), configuração (inji-config) e os canais entre eles (OpenID4VCI/VP, QR, BLE).
 
 ### Premissas
 

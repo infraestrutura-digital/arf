@@ -2,7 +2,7 @@
 ## Rascunho — não normativo
 :::
 
-Define o formato das credenciais emitidas no PodeCrer. Contexto explicativo: [Decisões de arquitetura — W3C VC](/stack-tecnologico.qmd#formato-de-credencial-w3c-vc).
+Define o formato das credenciais emitidas na IPD de Credenciais. Contexto explicativo: [Decisões de arquitetura — W3C VC](/stack-tecnologico.qmd#formato-de-credencial-w3c-vc).
 
 ## Modelo de dados
 

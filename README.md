@@ -1,6 +1,6 @@
-# ARF — PodeCrer
+# Arquitetura de Referência (AR) — Infraestrutura Pública Digital de Credenciais Verificáveis
 
-Documentação técnica (Architecture Reference Framework) da **Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil**, baseada no stack open source [Inji](https://inji.io) com customizações da organização [injibr](https://github.com/injibr).
+Arquitetura de Referência (AR) da **Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil**, baseada no stack open source [Inji](https://inji.io) com customizações da organização [injibr](https://github.com/injibr).
 
 Site construído com [Quarto](https://quarto.org). A estrutura se inspira na [documentação técnica do swiyu](https://swiyu-admin-ch.github.io/) (e-ID suíça) e no [ARF europeu](https://eu-digital-identity-wallet.github.io/eudi-doc-architecture-and-reference-framework/); o conteúdo é original e adaptado ao stack Inji.
 

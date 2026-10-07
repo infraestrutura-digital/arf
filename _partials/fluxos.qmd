@@ -1,4 +1,4 @@
-Os diagramas de sequência dos fluxos centrais do PodeCrer. Cada fluxo é descrito em prosa e em diagrama; os requisitos normativos correspondentes estão nos perfis das [Especificações](/especificacoes/index.qmd), e o passo a passo de implementação, nos [Guias práticos](/cookbooks/index.qmd) — este capítulo explica *como funciona*, não *o que é obrigatório* nem *como implantar*.
+Os diagramas de sequência dos fluxos centrais da IPD de Credenciais. Cada fluxo é descrito em prosa e em diagrama; os requisitos normativos correspondentes estão nos perfis das [Especificações](/especificacoes/index.qmd), e o passo a passo de implementação, nos [Guias práticos](/cookbooks/index.qmd) — este capítulo explica *como funciona*, não *o que é obrigatório* nem *como implantar*.
 
 ::: {.callout-note}
 Os diagramas refletem o comportamento do stack Inji na configuração do perfil brasileiro. Passos que dependem de decisões pendentes estão marcados *a confirmar*.

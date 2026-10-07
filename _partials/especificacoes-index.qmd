@@ -1,4 +1,4 @@
-As especificações definem o **Perfil Brasileiro** do PodeCrer: as escolhas normativas — versões de padrões, algoritmos, restrições — que emissores, verificadores e carteiras devem seguir para interoperar. É o equivalente aos *Swiss Profiles* do swiyu e às *Technical Specifications* do ARF europeu.
+As especificações definem o **Perfil Brasileiro** da IPD de Credenciais: as escolhas normativas — versões de padrões, algoritmos, restrições — que emissores, verificadores e carteiras devem seguir para interoperar. É o equivalente aos *Swiss Profiles* do swiyu e às *Technical Specifications* do ARF europeu.
 
 | Perfil | Prefixo | Escopo |
 |---|---|---|

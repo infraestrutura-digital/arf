@@ -1,4 +1,11 @@
-Esta é a documentação oficial do **PodeCrer**, a Infraestrutura Pública Digital de credenciais verificáveis do Brasil — uma solução tecnológica para compartilhamento consentido de dados. O documento tem dois objetivos: **explicar a arquitetura** do ecossistema e **guiar a entrada de novos participantes** — emissores, carteiras e verificadores.
+Esta é a documentação oficial da **Infraestrutura Pública Digital de Credenciais Verificáveis** do Brasil (IPD de Credenciais) — uma solução tecnológica para compartilhamento consentido de dados. O documento tem dois objetivos: **explicar a arquitetura** do ecossistema e **guiar a entrada de novos participantes** — emissores, carteiras e verificadores.
+
+::: {.content-visible when-format="html"}
+::: {.callout-tip}
+## Versão em PDF
+Toda esta documentação também está disponível em um único arquivo, para leitura e impressão: [Arquitetura de Referência (PDF)](ar-ipd-credenciais.pdf){download="ar-ipd-credenciais.pdf"}.
+:::
+:::
 
 ## Para quem é
 
@@ -18,7 +25,7 @@ Seguimos a separação do framework [Diátaxis](https://diataxis.fr/) entre trê
 
 ## Status e versionamento
 
-O PodeCrer está em fase de prova de conceito. Seções marcadas *em definição* ou *a confirmar* dependem de decisões de governança ou arquitetura ainda não tomadas — o [Roadmap](/roadmap.qmd) consolida todas essas pendências em um único lugar. As especificações indicam seu estágio (rascunho ou normativo) no topo de cada página.
+A IPD de Credenciais está em fase de prova de conceito. Seções marcadas *em definição* ou *a confirmar* dependem de decisões de governança ou arquitetura ainda não tomadas — o [Roadmap](/roadmap.qmd) consolida todas essas pendências em um único lugar. As especificações indicam seu estágio (rascunho ou normativo) no topo de cada página.
 
 ## Site e PDF
 

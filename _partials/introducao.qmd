@@ -1,24 +1,23 @@
-Antes dos detalhes técnicos, vale entender o que é uma credencial verificável e por que o PodeCrer foi desenhado do jeito que é — uma espécie de **"Pix de documentos"**: uma infraestrutura pública sobre a qual qualquer emissor e verificador pode construir.
+Antes dos detalhes técnicos, vale entender o que é uma credencial verificável e por que a IPD de Credenciais foi desenhada do jeito que é — uma espécie de **"Pix de documentos"**.
 
 ## O problema
 
-::: {layout-ncol=2}
-![Na internet, ninguém sabe quem você é — e você não tem como provar.](assets/images/problema-internet.png){fig-alt="Ilustração de um cachorro sentado a uma escrivaninha, digitando em um computador"}
 
-![No mundo físico, para provar um fato você entrega todos.](assets/images/problema-bar.jpg){fig-alt="Ilustração de um bar com fotocopiadora e aviso: para comprar bebida, deixe sua fotocópia do RG aqui; sem cópia, sem álcool"}
-:::
 
-O problema tem duas faces, uma em cada mundo.
+A velha piada de que ["na internet, ninguém sabe que você é um cachorro"](https://pt.wikipedia.org/wiki/Na_Internet,_ningu%C3%A9m_sabe_que_voc%C3%AA_%C3%A9_um_cachorro) descreve uma limitação real: não existe um meio confiável e padronizado de demonstrar idade, formação, vínculo empregatício ou qualquer outro atributo sey.  **Na internet, confiar em dados recebidos é um problema.**
 
-**Na internet, não dá para provar fatos sobre você.** A velha piada de que "na internet, ninguém sabe que você é um cachorro" descreve uma limitação real: não existe um meio confiável e padronizado de demonstrar idade, formação, vínculo empregatício ou qualquer outro atributo. O resultado é fraude para um lado e barreiras burocráticas para o outro.
+![Na internet, ninguém sabe que você é um cachorro.](assets/images/problema-internet.png){fig-alt="Ilustração de um cachorro sentado a uma escrivaninha, digitando em um computador"}
 
-**No mundo físico, provar um fato custa todos os seus dados.** Para comprar uma bebida, você não prova apenas que é maior de idade: entrega o documento inteiro — nome completo, CPF, filiação, endereço — e, no exemplo do bar, uma fotocópia dele ainda fica para trás, fora do seu controle, numa gaveta qualquer.
 
-São dois sintomas da mesma ausência: **falta um meio de provar exatamente o fato necessário — nada a mais —, de forma verificável, dentro e fora da internet.** É isso que as credenciais verificáveis resolvem.
+Para evitar fraudes, muitos verificadores (consumidores de dados) passaram a exigir a identificação do usuário usando biometria e _upload_ de documento com foto. Essa solução, porém, cria novos problemas. O primeiro é a **privacidade**: o usuário entrega muito mais informação do que o necessário. Para provar apenas que é maior de idade, por exemplo, acaba expondo nome completo, CPF, data de nascimento, filiação e o próprio rosto, o que contraria o princípio da minimização de dados previsto na LGPD. O segundo é a **segurança**: cada verificador passa a armazenar cópias de dados sensíveis, multiplicando os alvos de ataque. Quando ocorre um vazamento, o dano é permanente, já que não é possível trocar de rosto ou de CPF como se troca uma senha. Por fim, a concentração desses dados permite cruzar informações e rastrear a atividade das pessoas entre diferentes serviços.
+
+
+**É preciso um modelo em que o usuário consiga provar apenas o que é necessário, sem abrir mão do controle sobre seus dados.**
+
 
 ## O que é uma credencial
 
-No mundo físico, uma credencial é um **documento emitido por uma instituição ou indivíduo confiável que contém informação a respeito de alguma entidade** — RG, CNH, diploma, carteirinha de plano de saúde. Cinco elementos a fazem funcionar:
+No mundo físico, uma credencial é um **documento emitido por uma instituição confiável que contém informação a respeito de alguma entidade** (em geral, sobre uma pessoa) — RG, CNH, diploma, carteirinha de plano de saúde. Cinco elementos a fazem funcionar:
 
 1. **Emissor** — alguém em quem o verificador confia atesta o fato.
 2. **Vinculação ao portador** — a foto liga o documento à pessoa que o apresenta.
@@ -32,13 +31,13 @@ No mundo físico, uma credencial é um **documento emitido por uma instituição
 
 Uma **credencial verificável** (VC) é o equivalente digital — com uma diferença essencial: é **verificável por máquinas**. Cada elemento físico tem seu análogo criptográfico: a assinatura digital do emissor substitui o holograma; uma chave criptográfica no dispositivo da pessoa substitui a foto (vinculação ao portador); os campos de validade são legíveis por software; e o formato padronizado é o [W3C Verifiable Credentials Data Model](https://www.w3.org/TR/vc-data-model-2.0/).
 
-![Com credenciais verificáveis, a pessoa carrega e apresenta seus próprios dados.](assets/images/credencial-verificavel.jpg){fig-alt="Ilustração de uma pessoa segurando um celular, cercada por ícones de credenciais, cadeados e documentos conectados em rede"}
+![Com credenciais verificáveis, a pessoa carrega e apresenta seus próprios dados.](assets/images/credencial-verificavel.png){fig-alt="Ilustração do código de uma credencial verificável"}
 
-O resultado: **na internet, agora dá para provar fatos sobre você sem abrir mão da sua privacidade.**
+O resultado: **dá para provar fatos sobre você sem abrir mão da sua privacidade.**
 
 ## Princípios
 
-O PodeCrer segue quatro princípios de projeto:
+A IPD de Credenciais segue quatro princípios de projeto:
 
 | Princípio | O que significa |
 |---|---|
@@ -47,16 +46,8 @@ O PodeCrer segue quatro princípios de projeto:
 | **Privacidade por design** | Minimização de dados (provar `age_over_18` sem revelar a data de nascimento) e ausência de rastreamento. |
 | **Segurança** | Criptografia de ponta a ponta, chaves protegidas por hardware, assinaturas ancoradas na ICP-Brasil — segurança em camadas. |
 
-![Os quatro princípios do PodeCrer.](assets/images/principios.png){fig-alt="Quatro ícones em fila: mão segurando pessoa (soberania do usuário), peças de quebra-cabeça (padrão aberto), cadeado com folha (privacidade por design) e escudo (segurança em camadas)"}
+![Os quatro princípios da IPD de Credenciais.](assets/images/principios.png){fig-alt="Quatro ícones em fila: mão segurando pessoa (soberania do usuário), peças de quebra-cabeça (padrão aberto), cadeado com folha (privacidade por design) e escudo (segurança em camadas)"}
 
-## O modelo duplo-cego {#o-modelo-duplo-cego}
-
-O ecossistema tem três papéis — **emissor**, **portador** e **verificador** — e uma propriedade fundamental que chamamos de *duplo-cego*:
-
-- O **emissor não sabe onde a credencial é usada.** Depois de emitida, a credencial vive no dispositivo da pessoa; a verificação não consulta o emissor.
-- O **verificador não precisa se identificar para o emissor** nem depende dele: valida a assinatura criptograficamente, offline se necessário.
-
-Isso impede a construção de um histórico central de "quem usou qual documento onde" — nem mesmo pelo Estado.
 
 ## Por que não uma simples API?
 
@@ -74,4 +65,4 @@ Mas ela viola os princípios:
 - **Acoplamento e disponibilidade** — cada verificação depende do emissor estar no ar; não funciona offline.
 - **Não escala como padrão** — cada emissor inventaria sua API; credenciais verificáveis dão um formato único para qualquer fato atestável.
 
-Credenciais verificáveis atendem aos quatro princípios com uma única arquitetura — a que este ARF descreve. Continue por [Papéis e arquitetura](/papeis-e-arquitetura.qmd) para conhecer os papéis e componentes.
+Credenciais verificáveis atendem aos quatro princípios com uma única arquitetura — a que esta Arquitetura de Referência descreve. Continue por [Papéis e arquitetura](/papeis-e-arquitetura.qmd) para conhecer os papéis e componentes.

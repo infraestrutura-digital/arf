@@ -1,11 +1,11 @@
 ::: {.callout-warning}
 ## Rascunho
-Datas e prioridades dependem da governança do PodeCrer; esta página registra o estado e as lacunas conhecidas. É o **índice canônico** de tudo o que está marcado *em definição* ou *a confirmar* nesta documentação.
+Datas e prioridades dependem da governança da IPD de Credenciais; esta página registra o estado e as lacunas conhecidas. É o **índice canônico** de tudo o que está marcado *em definição* ou *a confirmar* nesta documentação.
 :::
 
 ## Estágio atual
 
-O PodeCrer está em fase de **prova de conceito**: forks dos componentes Inji na organização [injibr](https://github.com/injibr) (inji-certify, inji-verify, mimoto, inji-config), documentação de arquitetura em elaboração (este site) e ambientes brasileiros ainda não publicados.
+A IPD de Credenciais está em fase de **prova de conceito**: forks dos componentes Inji na organização [injibr](https://github.com/injibr) (inji-certify, inji-verify, mimoto, inji-config), documentação de arquitetura em elaboração (este site) e ambientes brasileiros ainda não publicados.
 
 ## Lacunas conhecidas
 

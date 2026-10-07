@@ -1,17 +1,18 @@
 ---
-title: "PodeCrer"
+title: "Arquitetura de Referência"
+subtitle: "Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil"
 toc: false
 page-layout: full
 sidebar: false
 ---
 
 ::: {.hero-banner}
-![](assets/images/podecrer__logo.svg){.hero-logo fig-alt="PodeCrer" width="420"}
-
-Documentação técnica, guias e especificações do **PodeCrer** — a Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil, uma solução tecnológica para compartilhamento consentido de dados, construída sobre o stack open source [Inji](https://inji.io) com customizações da organização [injibr](https://github.com/injibr).
+Documentação técnica, guias e especificações da **Infraestrutura Pública Digital de Credenciais Verificáveis** do Brasil (IPD de Credenciais), uma solução tecnológica para compartilhamento consentido de dados, construída sobre o stack open source [Inji](https://inji.io) com customizações da organização [injibr](https://github.com/injibr).
 :::
 
-Este site é o **Architecture Reference Framework (ARF)** do PodeCrer. O conteúdo reflete o estado atual da implementação e está sujeito a mudanças; seções marcadas como *em definição* dependem de decisões de governança ainda não tomadas. Leia [Sobre esta documentação](sobre.qmd) para saber como o material está organizado e por onde começar conforme o seu perfil:
+Este site é a **Arquitetura de Referência (AR)** da IPD de Credenciais. Seu objetivo é descrever a base técnica que viabiliza uma interação segura e confiável entre emissores, portadores e verificadores de credenciais, garantindo aos usuários o controle sobre quais informações compartilham e com quem.
+
+O conteúdo reflete o estado atual da implementação e está sujeito a mudanças; seções marcadas como *em definição* dependem de decisões ainda não tomadas. Leia [Sobre esta documentação](sobre.qmd) para saber como o material está organizado e por onde começar conforme o seu perfil:
 
 - **Gestores públicos** — comecem pela [Introdução](introducao.qmd) e pelas [Funcionalidades e jornadas](funcionalidades-e-jornadas.qmd).
 - **Integradores técnicos** — sigam dos [Fluxos em detalhe](fluxos.qmd) para os [Guias práticos](cookbooks/index.qmd) e as [Especificações](especificacoes/index.qmd).

@@ -8,7 +8,7 @@ Termos usados nesta documentação. Nos capítulos, o termo em inglês aparece q
 
 **Credencial verificável (VC)** — equivalente digital de um documento: conjunto de atributos sobre alguém, assinado digitalmente por um emissor, verificável por máquinas. Padrão: W3C Verifiable Credentials Data Model.
 
-**DID (Decentralized Identifier)** — identificador padronizado pelo W3C que resolve para um documento com chaves públicas. No PodeCrer, emissores usam `did:web` (publicado sob o domínio institucional) e portadores usam `did:jwk` (derivado da chave do dispositivo).
+**DID (Decentralized Identifier)** — identificador padronizado pelo W3C que resolve para um documento com chaves públicas. Na IPD de Credenciais, emissores usam `did:web` (publicado sob o domínio institucional) e portadores usam `did:jwk` (derivado da chave do dispositivo).
 
 **Duplo-cego** — propriedade do ecossistema: o emissor não sabe onde a credencial é usada, e o verificador não precisa se identificar ao emissor nem consultá-lo para validar.
 

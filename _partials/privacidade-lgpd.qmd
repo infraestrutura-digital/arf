@@ -1,4 +1,4 @@
-O PodeCrer trata dados pessoais — muitas vezes sensíveis — e por isso a privacidade não é um capítulo de conformidade anexado ao final: é restrição de projeto. Este capítulo mostra como os princípios da [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei nº 13.709/2018) se materializam em decisões de arquitetura, e o que ainda depende da governança.
+A IPD de Credenciais trata dados pessoais — muitas vezes sensíveis — e por isso a privacidade não é um capítulo de conformidade anexado ao final: é restrição de projeto. Este capítulo mostra como os princípios da [LGPD](https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm) (Lei nº 13.709/2018) se materializam em decisões de arquitetura, e o que ainda depende da governança.
 
 ::: {.callout-note}
 Este capítulo é explicativo e não constitui parecer jurídico. As atribuições formais de papéis LGPD entre os participantes dependem do modelo de governança, *em definição*.
@@ -6,7 +6,7 @@ Este capítulo é explicativo e não constitui parecer jurídico. As atribuiçõ
 
 ## Privacidade por arquitetura, não por política
 
-A proteção mais forte que uma política pode oferecer é prometer não usar um dado; a proteção mais forte que uma arquitetura pode oferecer é **tornar o uso impossível**. O PodeCrer opta pela segunda sempre que viável:
+A proteção mais forte que uma política pode oferecer é prometer não usar um dado; a proteção mais forte que uma arquitetura pode oferecer é **tornar o uso impossível**. A IPD de Credenciais opta pela segunda sempre que viável:
 
 | Princípio LGPD | Como a arquitetura o implementa |
 |---|---|

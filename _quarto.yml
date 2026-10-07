@@ -3,22 +3,18 @@ project:
   output-dir: _site
   render:
     - "**/*.qmd"
-    - "!arf-pdf.qmd"
 
 lang: pt-BR
 
 website:
-  title: "PodeCrer"
-  description: "Documentação técnica do PodeCrer — a Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil"
+  title: "AR · IPD de Credenciais"
+  description: "Arquitetura de Referência da Infraestrutura Pública Digital de Credenciais Verificáveis do Brasil (IPD de Credenciais)"
   site-url: https://injibr.github.io/arf
   repo-url: https://github.com/injibr/arf
   repo-actions: [edit, issue]
   page-navigation: true
   navbar:
     background: light
-    logo: assets/images/podecrer__logo.svg
-    logo-alt: "PodeCrer"
-    title: false
     search: true
     left:
       - text: "Entenda"
@@ -81,7 +77,7 @@ website:
         - especificacoes/perfil-verificacao.qmd
         - especificacoes/perfil-confianca.qmd
   page-footer:
-    left: "PodeCrer — documentação técnica"
+    left: "Arquitetura de Referência da IPD de Credenciais Verificáveis"
     right:
       - text: "Referências: ARF (UE) · swiyu (Suíça) · Inji (MOSIP)"
         href: referencias.qmd

@@ -1,4 +1,4 @@
-Todos os componentes do PodeCrer são open source. As customizações brasileiras vivem na organização [**injibr**](https://github.com/injibr), como forks do upstream [MOSIP/Inji](https://github.com/mosip). A regra geral de contribuição: mudanças genéricas vão para o upstream; apenas o que é específico do Brasil (configuração, tradução, integrações locais) fica nos forks.
+Todos os componentes da IPD de Credenciais são open source. As customizações brasileiras vivem na organização [**injibr**](https://github.com/injibr), como forks do upstream [MOSIP/Inji](https://github.com/mosip). A regra geral de contribuição: mudanças genéricas vão para o upstream; apenas o que é específico do Brasil (configuração, tradução, integrações locais) fica nos forks.
 
 ## Repositórios
 

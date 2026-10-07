@@ -1,4 +1,4 @@
-Os guias práticos são passo a passo, orientados a tarefa, para integrar-se ao PodeCrer. Cada um cobre um papel do ecossistema; todos começam com pré-requisitos e terminam com um checklist. Antes de seguir um guia, vale ter lido [Papéis e arquitetura](/papeis-e-arquitetura.qmd) e [Fluxos em detalhe](/fluxos.qmd).
+Os guias práticos são passo a passo, orientados a tarefa, para integrar-se aa IPD de Credenciais. Cada um cobre um papel do ecossistema; todos começam com pré-requisitos e terminam com um checklist. Antes de seguir um guia, vale ter lido [Papéis e arquitetura](/papeis-e-arquitetura.qmd) e [Fluxos em detalhe](/fluxos.qmd).
 
 | Guia | Para quem |
 |---|---|

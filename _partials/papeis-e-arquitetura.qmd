@@ -1,36 +1,64 @@
-O PodeCrer segue o paradigma de **identidade descentralizada**: a pessoa portadora é dona dos seus dados e os carrega em uma carteira digital no próprio dispositivo. Emissores entregam credenciais verificáveis diretamente à carteira; verificadores checam a autenticidade criptograficamente, sem precisar consultar o emissor a cada verificação. Este capítulo apresenta os papéis e componentes por trás das jornadas descritas em [Funcionalidades e jornadas](/funcionalidades-e-jornadas.qmd); o detalhe protocolo a protocolo está em [Fluxos em detalhe](/fluxos.qmd).
+A IPD de Credenciais segue o paradigma de **identidade descentralizada**: a pessoa portadora é dona dos seus dados e os carrega em uma carteira digital no próprio dispositivo. Emissores entregam credenciais verificáveis diretamente à carteira; verificadores checam a autenticidade criptograficamente, sem precisar consultar o emissor a cada verificação. Este capítulo apresenta os papéis e componentes por trás das jornadas descritas em [Funcionalidades e jornadas](/funcionalidades-e-jornadas.qmd); o detalhe protocolo a protocolo está em [Fluxos em detalhe](/fluxos.qmd).
 
 ![O triângulo da confiança: o emissor entrega a credencial à pessoa portadora (OpenID4VCI), que a apresenta ao verificador (OpenID4VP/QR); a confiança do verificador no emissor é ancorada em DID, status e no registro de confiança (em definição).](assets/images/diagrama_ecossistema.png){fig-alt="Diagrama com três caixas em triângulo — Portador (Inji Wallet), Emissor (Inji Certify) e Verificador (Inji Verify) — ligadas por setas de emissão, apresentação e confiança, com um escudo ao centro representando o registro de confiança"}
 
+O ecossistema tem três papéis — **emissor**, **portador** e **verificador** — e uma propriedade fundamental que chamamos de *duplo-cego*:
+
+- O **emissor não sabe onde a credencial é usada.** Depois de emitida, a credencial vive no dispositivo da pessoa; a verificação não consulta o emissor.
+- O **verificador não precisa se identificar para o emissor** nem depende dele: valida a assinatura criptograficamente, offline se necessário.
+
+Isso impede a construção de um histórico central de "quem usou qual documento onde" — nem mesmo pelo Estado.
+
 ## Papéis
 
-### Portador e Carteiras {#portador-e-carteiras}
+### Portador e Carteira {#portador-e-carteiras}
 
-A pessoa **portadora** (holder) recebe, guarda e apresenta credenciais por meio de uma **carteira digital** (wallet). A carteira de referência do ecossistema é a **Inji Wallet**, aplicativo móvel open source do stack Inji, acessado no Brasil por meio da customização mantida em [injibr](https://github.com/injibr). A carteira:
+O **portador** (*holder*) está no centro do ecossistema. Ele recebe credenciais de emissores, guarda-as em uma **carteira digital** (*wallet*) e pode apresentá-las a verificadores quando quiser. Ao apresentar uma credencial, o portador gera uma prova criptográfica que vincula a apresentação a um verificador e a um momento específicos, impedindo que ela seja reutilizada ou repassada indevidamente pelo verificador ou por terceiros.
 
-- baixa credenciais de emissores via OpenID4VCI;
+A carteira é um aplicativo seguro que armazena e gerencia as credenciais emitidas para uma pessoa. É por meio dela que o portador interage com os demais participantes do ecossistema. A carteira:
+
+- obtém credenciais dos emissores via OpenID4VCI;
 - armazena as credenciais no dispositivo, protegidas por autenticação local;
-- apresenta credenciais a verificadores online (OpenID4VP) ou presencialmente (QR code e compartilhamento offline via Bluetooth Low Energy).
+- apresenta credenciais a verificadores, tanto online (OpenID4VP) quanto presencialmente (via QR code).
 
-O backend da carteira é o **mimoto** (BFF — *backend for frontend*), que intermedeia a comunicação entre o app e os serviços de emissão.
+A carteira de referência do ecossistema é a **Inji Wallet**, aplicativo móvel de código aberto da plataforma Inji. No Brasil, ela é disponibilizada por meio de uma versão customizada mantida no repositório [injibr/guarda](https://github.com/injibr/guarda).
+
 
 ### Emissor
 
-O **emissor** (issuer) é a entidade — órgão público ou credenciada — que atesta fatos sobre a pessoa portadora na forma de credenciais verificáveis: identidade civil, habilitação, diploma, matrícula, benefício social etc. No stack Inji, o componente de emissão é o **Inji Certify**, que expõe o protocolo OpenID4VCI e se conecta às bases de dados do emissor por meio de plugins.
+O **emissor** (*issuer*) é a entidade responsável por criar credenciais verificáveis e emiti-las para as carteiras dos portadores. Essas credenciais atestam informações (atributos) sobre o portador, como identidade civil, faixa etária, habilitação, diploma, matrícula, benefício social ou até um ingresso de cinema.
+
+Cada emissor define, de forma independente, quais informações uma credencial contém. Para atestá-las, o emissor assina a credencial criptograficamente, o que impede adulterações e garante que ela possa ser verificada. Emissores também são responsáveis pelo ciclo de vida das credenciais, incluindo revogação, suspensão e reemissão, quando necessário.
+
+Qualquer entidade do setor público ou privado pode se tornar emissora na IPD de Credenciais do Brasil. Os mecanismos para inclusão de emissores no registro de confiança, no entanto, ainda estão em definição.
+
+No stack Inji, o componente de emissão é o **Inji Certify**, que implementa o protocolo OpenID4VCI e se conecta às bases de dados do emissor por meio de plugins.
+
 
 ### Verificador
 
-O **verificador** (verifier / relying party) é quem precisa confirmar um fato sobre a pessoa: um banco validando identidade, uma escola conferindo um diploma, um agente de fiscalização checando uma habilitação. O componente de referência é o **Inji Verify**, que valida assinaturas, status de revogação e a conformidade da credencial — inclusive offline, a partir do QR code embarcado na credencial.
+O **verificador** (*verifier* ou *relying party*) é a entidade que precisa confirmar uma informação sobre o portador: um banco validando uma identidade, uma escola conferindo um diploma, um agente de fiscalização checando uma habilitação. Verificadores são, portanto, consumidores de dados confiáveis.
+
+O verificador confirma a integridade, a autenticidade e a validade das credenciais checando as assinaturas criptográficas tanto do emissor quanto do portador. Pode ainda consultar o status da credencial para saber se ela continua válida, por exemplo, se não foi revogada ou suspensa.
+
+No stack Inji, o componente de verificação é o **Inji Verify**, que valida assinaturas, status de revogação e conformidade da credencial, inclusive offline, a partir do QR code embutido na credencial. Por ser de código aberto, ele permite que qualquer entidade se torne um verificador independente.
+
+A arquitetura da IPD de Credenciais do Brasil prevê ainda um **Verificador Universal**: um serviço do gov.br, voltado a pessoas físicas, capaz de verificar qualquer tipo de credencial do ecossistema. O serviço está em construção e deve ser disponibilizado como site e como funcionalidade do aplicativo gov.br, permitindo a apresentação e a verificação offline, de celular para celular.
 
 ### Provedor de autenticação
 
-Durante a emissão, a pessoa precisa provar quem é para o emissor. No perfil brasileiro, essa autenticação é feita pelo **Acesso gov.br** (login único do Governo Federal), via OpenID Connect, com os níveis de confiabilidade bronze/prata/ouro. O eSignet, usado no stack Inji upstream, não faz parte do perfil brasileiro.
+Durante a emissão, a pessoa precisa provar quem é para o emissor. Para as credenciais emitidas por órgãos públicos, essa autenticação é feita pelo **Acesso gov.br** (login único do Governo Federal), via OpenID Connect, com os níveis de confiabilidade bronze/prata/ouro.
+
+Cabe a cada emissor definir que nível de confiabilidade é necessário para a credencial emitida.
 
 ### Registros e âncoras de confiança
 
+
+O **registro de confiança** (*trust registry*) é a entidade que fornece informações sobre a identidade de emissores e verificadores e mantém o status de validade das credenciais. Cabe a ele definir se um emissor está autorizado a emitir determinado tipo de credencial. Na IPD de Credenciais do Brasil, a expectativa é que esse papel seja exercido pelo ITI, que já é o gestor da lista de confiança da ICP-Brasil.
+
 ::: {.callout-note}
 ## Em definição
-O modelo suíço mantém dois registros centrais: um **Base Registry** (identificadores e material criptográfico de emissores/verificadores) e um **Trust Registry** (quem está autorizado a emitir ou verificar o quê). O equivalente brasileiro — incluindo o papel do gov.br, de registros setoriais e da cadeia ICP-Brasil — ainda está em definição. Os modelos em avaliação estão em [Confiança e governança](/confianca-e-governanca.qmd).
+O modelo de registros de confiança da IPD, incluindo o papel do gov.br, dos registros setoriais e da cadeia da ICP-Brasil, ainda está em definição. As alternativas em avaliação estão descritas em [Confiança e governança](/confianca-e-governanca.qmd).
 :::
 
 ## Componentes e Governança
