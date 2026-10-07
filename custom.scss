@@ -83,22 +83,6 @@ $navbar-fg: #494e52;
   }
 }
 
-// Slot de imagem do card: gradiente já aplicado via CSS;
-// o texto dentro é o prompt para gerar a imagem definitiva.
-.card-img, .page-banner {
-  @include ipd-gradient;
-  color: rgba(255, 255, 255, 0.92);
-  padding: 1rem 1.25rem;
-  font-size: 0.72rem;
-  line-height: 1.5;
-
-  p { padding: 0; margin: 0.25rem 0; }
-  code { color: #fff; background: rgba(255,255,255,0.15); }
-  strong { color: #fff; }
-}
-
-.card-img { min-height: 170px; }
-
 // Card com ícone Lucide (SVG inline) sobre o gradiente — estilo swiyu
 .card-icon {
   @include ipd-gradient;
@@ -125,16 +109,11 @@ $navbar-fg: #494e52;
   p { padding: 0; margin: 0; display: contents; }
 }
 
-// Card com imagem real gerada (substitui o placeholder de prompt)
+// Card com imagem
 .card-photo {
   margin: 0;
   p { padding: 0; margin: 0; }
   img { width: 100%; display: block; margin: 0; }
-}
-
-.page-banner {
-  border-radius: 8px;
-  margin-bottom: 2rem;
 }
 
 // Placeholder de diagrama (fundo claro, borda tracejada)
