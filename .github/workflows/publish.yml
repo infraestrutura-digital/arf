@@ -18,12 +18,20 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
           version: 1.8.24
+
+      # Os diagramas Mermaid do PDF são convertidos em imagem por um Chromium headless.
+      # No Ubuntu 24.04, o AppArmor bloqueia os user namespaces que ele usa e o render trava.
+      - name: Instalar Chromium para os diagramas do PDF
+        run: |
+          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+          quarto install chromium --no-prompt
 
       - name: Renderizar
         run: quarto render
