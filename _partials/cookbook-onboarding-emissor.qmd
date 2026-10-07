@@ -1,11 +1,3 @@
-:::: {.content-visible when-format="html"}
-::: {.page-banner}
-`banner_cookbook_emissor.png` · 10:3
-
-**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de um prédio institucional com colunas (estilo pórtico), traço uniforme e cantos arredondados, centralizado; abaixo, o texto "emissor" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
-:::
-::::
-
 Este guia mostra como colocar um **emissor de credenciais** no ar usando o [Inji Certify](https://github.com/injibr/inji-certify).
 
 ::: {.callout-warning}

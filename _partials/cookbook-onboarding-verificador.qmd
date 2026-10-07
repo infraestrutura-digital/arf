@@ -1,11 +1,3 @@
-:::: {.content-visible when-format="html"}
-::: {.page-banner}
-`banner_cookbook_verificador.png` · 10:3
-
-**Prompt NB2:** Banner largo. Ícone de linha branca minimalista de uma lupa com um sinal de visto (check) dentro da lente, traço uniforme e cantos arredondados, centralizado; abaixo, o texto "verificador" em branco, minúsculas, fonte sans-serif geométrica. Fundo: gradiente diagonal suave e vibrante de azul profundo (#0B2B66) a azul (#1351B4), teal (#0E7A5F) e verde (#168821), com brilho radial sutil. Estética flat, vetorial, limpa, sem texturas, sem pessoas. Proporção 10:3.
-:::
-::::
-
 Este guia mostra como **verificar credenciais** usando o [Inji Verify](https://github.com/injibr/inji-verify).
 
 ::: {.callout-warning}
