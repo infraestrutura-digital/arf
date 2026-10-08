@@ -1,4 +1,4 @@
-Os guias práticos são passo a passo, orientados a tarefa, para integrar-se aa IPD de Credenciais. Cada um cobre um papel do ecossistema; todos começam com pré-requisitos e terminam com um checklist. Antes de seguir um guia, vale ter lido [Papéis e arquitetura](/papeis-e-arquitetura.qmd) e [Fluxos em detalhe](/fluxos.qmd).
+Os guias práticos são passo a passo, orientados a tarefa, para integrar-se à IPD de Credenciais. Cada um cobre um papel do ecossistema; todos começam com pré-requisitos e terminam com um checklist. Antes de seguir um guia, vale ter lido [Papéis e arquitetura](/papeis-e-arquitetura.qmd) e [Fluxos em detalhe](/fluxos.qmd).
 
 | Guia | Para quem |
 |---|---|
@@ -6,6 +6,13 @@ Os guias práticos são passo a passo, orientados a tarefa, para integrar-se aa 
 | [Tornar-se verificador](/cookbooks/onboarding-verificador.qmd) | Quem precisa verificar credenciais com o Inji Verify |
 | [Integração com o Acesso gov.br](/cookbooks/integracao-govbr.qmd) | Emissores que precisam autenticar portadores na emissão |
 | [Carteira](/cookbooks/carteira.qmd) | Como obter e usar a carteira; build do app |
+
+## Casos de uso
+
+Portais do desenvolvedor de aplicações concretas da IPD de Credenciais, com o passo a passo de integração de cada caso:
+
+- [Caso de Uso: verificação etária](https://infraestrutura-digital.github.io/verificaidade_dev/) — comprovar idade mínima sem revelar outros dados pessoais.
+- [Caso de Uso: crédito rural](https://infraestrutura-digital.github.io/verifica-docs-rural_dev/) — verificar credenciais de documentos exigidos na concessão de crédito rural.
 
 ## Pré-requisitos comuns
 

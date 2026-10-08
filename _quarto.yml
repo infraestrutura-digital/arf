@@ -66,6 +66,12 @@ website:
         - cookbooks/onboarding-verificador.qmd
         - cookbooks/integracao-govbr.qmd
         - cookbooks/carteira.qmd
+        - section: "Casos de uso"
+          contents:
+            - text: "Verificação etária"
+              href: https://infraestrutura-digital.github.io/verificaidade_dev/
+            - text: "Crédito rural"
+              href: https://infraestrutura-digital.github.io/verifica-docs-rural_dev/
     - id: especificacoes
       title: "Especificações"
       style: docked
