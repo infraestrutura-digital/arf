@@ -9,6 +9,7 @@ Os diagramas refletem o comportamento do stack Inji na configuração do perfil 
 A pessoa escolhe o emissor na carteira, autentica-se com sua conta gov.br e recebe a credencial vinculada a uma chave do seu dispositivo (*holder binding*):
 
 ```{mermaid}
+%%{init: {"fontFamily": "sans-serif", "sequence": {"mirrorActors": false}}}%%
 sequenceDiagram
     autonumber
     actor P as Pessoa portadora
@@ -37,6 +38,7 @@ Pontos que merecem atenção: a autenticação é do **provedor gov.br**, não d
 O verificador pede; a pessoa consente; a carteira entrega uma *verifiable presentation* assinada. O emissor **não participa** — é o duplo-cego em ação:
 
 ```{mermaid}
+%%{init: {"fontFamily": "sans-serif", "sequence": {"mirrorActors": false}}}%%
 sequenceDiagram
     autonumber
     actor P as Pessoa portadora
@@ -62,6 +64,7 @@ Para sistemas que integram a verificação via API (transação com `vp-request`
 A própria credencial vai dentro do QR code (formato PixelPass: CBOR + compressão). A validação é local, sem rede de nenhum dos lados:
 
 ```{mermaid}
+%%{init: {"fontFamily": "sans-serif", "sequence": {"mirrorActors": false, "diagramMarginY": 60}}}%%
 sequenceDiagram
     autonumber
     actor P as Pessoa portadora
@@ -73,7 +76,8 @@ sequenceDiagram
     V->>V: decodifica PixelPass e extrai a credencial
     V->>V: valida assinatura com material criptográfico pré-sincronizado
     V->>V: valida integridade e validade temporal
-    Note over V: status de revogação não pode ser checado offline —<br/>o verificador DEVE sinalizar essa limitação
+    Note over V: status de revogação não pode ser checado offline
+    Note over V: o verificador DEVE sinalizar essa limitação
     V-->>P: resultado da validação
 ```
 
@@ -82,6 +86,7 @@ sequenceDiagram
 Onde não há internet para nenhuma das partes e o QR não basta (credenciais maiores, seleção de atributos), a credencial trafega por Bluetooth Low Energy (implementação Tuvali; especificação *openid4vp-over-ble: a confirmar*):
 
 ```{mermaid}
+%%{init: {"fontFamily": "sans-serif", "sequence": {"mirrorActors": false}}}%%
 sequenceDiagram
     autonumber
     actor P as Pessoa portadora
@@ -102,6 +107,7 @@ sequenceDiagram
 O emissor pode revogar uma credencial; verificadores detectam a revogação consultando uma **status list** — uma lista agregada, publicada em URL estável, que não revela quem consulta o quê *(mecanismo e versão da status list: a confirmar)*:
 
 ```{mermaid}
+%%{init: {"fontFamily": "sans-serif", "sequence": {"mirrorActors": false}}}%%
 sequenceDiagram
     autonumber
     participant C as Emissor (Inji Certify)
