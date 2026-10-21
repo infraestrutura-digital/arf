@@ -26,15 +26,17 @@ jobs:
         with:
           version: 1.8.24
 
-      # Os diagramas Mermaid do PDF são convertidos em imagem por um Chromium headless.
+      # Os diagramas Mermaid do PDF são convertidos em imagem por um Chrome headless.
       # No Ubuntu 24.04, o AppArmor bloqueia os user namespaces que ele usa e o render trava.
-      - name: Instalar Chromium para os diagramas do PDF
-        run: |
-          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
-          quarto install chromium --no-prompt
+      - name: Liberar sandbox do Chrome para os diagramas do PDF
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
 
+      # Usa o Google Chrome que já vem no runner: o Chromium de `quarto install chromium`
+      # (build 869685, de 2021) passou a travar no render do PDF.
       - name: Renderizar
         run: quarto render
+        env:
+          QUARTO_CHROMIUM: /usr/bin/google-chrome
 
       - uses: actions/upload-pages-artifact@v3
         with:
