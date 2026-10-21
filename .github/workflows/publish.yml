@@ -35,7 +35,7 @@ jobs:
       # (build 869685, de 2021) passou a travar no render do PDF.
       - name: Renderizar
         timeout-minutes: 6
-        run: quarto render arf-pdf.qmd --log-level debug
+        run: quarto render --log-level debug
         env:
           QUARTO_CHROMIUM: /usr/bin/google-chrome
 
