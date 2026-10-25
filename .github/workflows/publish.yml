@@ -33,9 +33,13 @@ jobs:
 
       # Usa o Google Chrome que já vem no runner: o Chromium de `quarto install chromium`
       # (build 869685, de 2021) passou a travar no render do PDF.
-      - name: Renderizar
+      - name: Renderizar PDF
         timeout-minutes: 6
-        run: quarto render --log-level debug
+        run: quarto render arf-pdf.qmd
+
+      - name: Renderizar site
+        timeout-minutes: 6
+        run: quarto render $(git ls-files '*.qmd' | grep -v -e '^arf-pdf.qmd$' -e '^_')
         env:
           QUARTO_CHROMIUM: /usr/bin/google-chrome
 
