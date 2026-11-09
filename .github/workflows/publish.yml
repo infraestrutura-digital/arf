@@ -22,9 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Quarto 1.8.x trava ao falar com o Chrome headless atual (Chrome >= ~141) no
+      # render dos diagramas Mermaid do PDF; 1.12.1 resolve.
       - uses: quarto-dev/quarto-actions/setup@v2
         with:
-          version: 1.8.24
+          version: 1.12.1
 
       # Os diagramas Mermaid do PDF são convertidos em imagem por um Chrome headless.
       # No Ubuntu 24.04, o AppArmor bloqueia os user namespaces que ele usa e o render trava.
@@ -34,6 +36,7 @@ jobs:
       # Usa o Google Chrome que já vem no runner: o Chromium de `quarto install chromium`
       # (build 869685, de 2021) passou a travar no render do PDF.
       - name: Renderizar
+        timeout-minutes: 10
         run: quarto render
         env:
           QUARTO_CHROMIUM: /usr/bin/google-chrome
